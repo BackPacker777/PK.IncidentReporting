@@ -1,0 +1,34 @@
+<div class="row">
+	<fieldset id="patientHistory">
+		<legend>Patient History</legend>
+		<div class="row">
+            <div class="small-3 columns">
+                <span class="label">Prior Injury/Illness</span><br>
+                <textarea name="priorInjury" id="priorInjury" placeholder="Describe prior injury/illness"></textarea>
+            </div>
+            <div class="small-2 columns">
+                <span class="label">Year</span><br>
+                <input name="yearInjured" id="yearInjured" placeholder="injured/illness" type="number">
+            </div>
+            <div class="small-2 columns">
+                <span class="label">Health Insurance?</span><br><span id="healthInsurance"></span>
+                <input name="healthInsurance" id="hiYes" value="Yes" type="radio" required><label for="hiYes">Yes</label>
+                <input name="healthInsurance" id="hiNo" value="No" type="radio" required><label for="hiNo">No</label>
+            </div>
+            <div class="small-3 columns">
+                <span class="label">Medications</span><br>
+                <textarea name="meds" id="meds" placeholder="List any medications taken" required></textarea>
+            </div>
+            <div class="small-2 columns">
+                <span class="label">Ticket Type</span><br>
+                <input name="ticketType" id="ticketType" placeholder="Ticket Type" type="text" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 columns end">
+                <span class="label">Group Name</span><br>
+                <input name="group" id="group" placeholder="Group" type="text">
+            </div>
+        </div>
+	</fieldset>
+</div>
