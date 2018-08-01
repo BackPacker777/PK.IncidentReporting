@@ -18,22 +18,39 @@ class DataHandler {
             console.log(`Connected to Sqlite3 DB`);
         });
         this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
-        id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-        maker TEXT,
-        model TEXT,
-        tag INTEGER,
-        sn TEXT,
-        type TEXT,
-        description TEXT,
-        warranty INTEGER,
-        purchaseDate INTEGER,
-        isTitle1 INTEGER DEFAULT 0,
-        isTitle9 INTEGER DEFAULT 0,
-        is31a INTEGER DEFAULT 0
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            day TEXT,
+            date TEXT,
+            incidentTime TEXT,
+            lastName TEXT,
+            firstName TEXT,
+            gender TEXT,
+            dob TEXT,
+            age INTEGER,
+            height INTEGER,
+            weight INTEGER,
+            patientStreet TEXT,
+            patientCity TEXT,
+            patientState TEXT,
+            patientZip INTEGER,
+            email TEXT,
+            occupation TEXT,
+            homePhoneNum TEXT,
+            cellPhoneNum TEXT,
+            priorInjury TEXT,
+            yearInjured INTEGER,
+          date TEXT,
+          date TEXT,
+          date TEXT,
+          date TEXT,
+          date TEXT,
+          date TEXT,
+          date TEXT,
+          date TEXT,
+          
         )`);
-        console.log(`Sqlite table -psp_assets- created`);
+        console.log(`Sqlite table -pk_incidents- created`);
         this.db.run(`PRAGMA AUTO_VACUUM = FULL`);
-        // date: http://www.sqlitetutorial.net/sqlite-date/
     }
 
     static renderDom(path, contentType, callback, encoding) {

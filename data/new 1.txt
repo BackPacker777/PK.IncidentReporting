@@ -1,0 +1,142 @@
+//PATIENT HISTORY--------------------------------------------------------------------------------------------------
+priorInjury
+yearInjured
+hi
+meds
+ticketType
+group
+
+//LOCATION---------------------------------------------------------------------------------------------------------
+location
+specificLocation
+
+//SKIING HISTORY---------------------------------------------------------------------------------------------------
+ability
+inLesson
+instructor
+timesWhere
+setOther
+numTimesToday
+numTimesPrior
+removedBy  removeFall').value);
+} else if (document.getElementById('removeInjured').checked) {
+removedBy  removeInjured').value);
+} else if (document.getElementById('removePatrol').checked) {
+removedBy  removePatrol').value);
+} else if (document.getElementById('removeOther').checked) {
+removedBy  removeOther').value);
+}
+
+//EQUIPMENT--------------------------------------------------------------------------------------------------------
+if (document.getElementById('equipAlpine').checked) {
+equipType  equipAlpine').value);
+} else if (document.getElementById('equipNordic').checked) {
+equipType  equipNordic').value);
+} else if (document.getElementById('equipSnowboard').checked) {
+equipType  equipSnowboard').value);
+} else if (document.getElementById('equipOther').checked) {
+equipType  equipOther').value);
+otherEquip  otherEquip').value);
+}
+if (document.getElementById('ownerOwn').checked) {
+owner  ownerOwn').value);
+} else if (document.getElementById('ownerRent').checked) {
+owner  ownerRent').value);
+skiNum  skiNum').value);
+bootNum  bootNum').value);
+shopName', "Nub's Nob");
+shopStreet', "500 Nub's Nob Road");
+shopCity', "Harbor Springs");
+shopState', "MI");
+shopZip', "49770");
+} else if (document.getElementById('ownerOther').checked) {
+owner  ownerOther').value);
+skiNum  skiNum').value);
+bootNum  bootNum').value);
+shopName  shopName').value);
+shopStreet  shopStreet').value);
+shopCity  shopCity').value);
+shopState  shopState').value);
+shopZip  shopZip').value);
+} else if (document.getElementById('ownerBorrowed').checked) {
+owner  ownerBorrowed').value);
+} else if (document.getElementById('ownerDemo').checked) {
+owner  ownerDemo').value);
+skiNum  skiNum').value);
+bootNum  bootNum').value);
+shopName', "Nub's Nob");
+shopStreet', "500 Nub's Nob Road");
+shopCity', "Harbor Springs");
+shopState', "MI");
+shopZip', "49770");
+}
+bindingMake  bindingMake').value);
+bindingModel  bindingModel').value);
+leftDinToe  leftDinToe').value);
+leftDinHeel  leftDinHeel').value);
+rightDinToe  rightDinToe').value);
+rightDinHeel  rightDinHeel').value);
+if (document.getElementById('helmetY').checked) {
+helmet  helmetY').value);
+if (document.getElementById('helmetRentalYes').checked) {
+helmetRental  helmetRentalYes').value);
+helmetNum  helmetRentalNum').value);
+} else if (document.getElementById('helmetRentalNo').checked) {
+helmetRental  helmetRentalNo').value);
+}
+} else if (document.getElementById('helmetN').checked) {
+helmet  helmetN').value);
+}
+if (document.getElementById('videoY').checked) {
+video  videoY').value);
+videoName  videoName').value);
+} else if (document.getElementById('videoN').checked) {
+video  videoN').value);
+}
+
+//INCIDENT DESCRIPTION---------------------------------------------------------------------------------------------
+incidentDescription  incidentDescription').value);
+statementTaker  statementTaker_0').value);
+
+//PROBABLE INJURY--------------------------------------------------------------------------------------------------
+let injuries
+injuryType
+injuryTypeOther
+injuryLocBoxes
+injuryZone
+injuryZoneOther
+
+//SITE CONDITIONS--------------------------------------------------------------------------------------------------
+conditionBoxes
+sceneSurface
+let sceneVis
+visBoxes
+sceneSurfaceOther
+sceneVisibility
+temp
+wind
+
+//FIRST AID RENDERED-----------------------------------------------------------------------------------------------
+hillFirstAid
+patrolRoomAid
+scenePatrollers
+transportPatrollers
+aidPatrollers
+
+//TRANSPORTATION & DESTINATION-------------------------------------------------------------------------------------
+howArrive
+arriveOther
+howLeave
+dest
+otherDest
+
+//WITNESSESS---------------------------------------------------------------------------------------------------------
+
+sessionStorage.setItem(`w${count}Name`, document.getElementById(`w${count}LastName`).value + ", " + document.getElementById(`w${count}FirstName`).value);
+sessionStorage.setItem(`w${count}Street`, document.getElementById(`w${count}Street`).value);
+sessionStorage.setItem(`w${count}CityStateZip`, document.getElementById(`w${count}City`).value + ", " + document.getElementById(`w${count}State`).value + " " + document.getElementById(`w${count}Zip`).value);
+sessionStorage.setItem(`w${count}HomePhoneNum`, document.getElementById(`w${count}HomePhoneNum`).value);
+sessionStorage.setItem(`w${count}CellPhoneNum`, document.getElementById(`w${count}CellPhoneNum`).value);
+
+//REPORT COMPLETER-------------------------------------------------------------------------------------------------
+reportCompleter
