@@ -17,12 +17,9 @@ class DataHandler {
             }
             console.log(`Connected to Sqlite3 DB`);
         });
-        this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
-            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-            day TEXT,
-            date TEXT,
-            incidentTime TEXT,
-            lastName TEXT,
+        this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
+            patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            lastName TEXT NOT NULL,
             firstName TEXT,
             gender TEXT,
             dob TEXT,
@@ -36,18 +33,28 @@ class DataHandler {
             email TEXT,
             occupation TEXT,
             homePhoneNum TEXT,
-            cellPhoneNum TEXT,
+            cellPhoneNum TEXT
+        )`);
+
+        this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientHistory (
+            patientHistory_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            patient_id INTEGER NOT NULL,
+            FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION,
             priorInjury TEXT,
             yearInjured INTEGER,
-          date TEXT,
-          date TEXT,
-          date TEXT,
-          date TEXT,
-          date TEXT,
-          date TEXT,
-          date TEXT,
-          date TEXT,
-          
+            healthInsurance INTEGER,
+            medications TEXT,
+            ticketType TEXT,
+            groupType TEXT
+        )`);
+
+        this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
+            incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            patient_id INTEGER NOT NULL,
+            FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+            day TEXT,
+            date TEXT,
+            incidentTime TEXT
         )`);
         console.log(`Sqlite table -pk_incidents- created`);
         this.db.run(`PRAGMA AUTO_VACUUM = FULL`);

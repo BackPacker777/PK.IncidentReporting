@@ -11,104 +11,118 @@
     <collation id="3" parent="1" name="BINARY"/>
     <collation id="4" parent="1" name="NOCASE"/>
     <collation id="5" parent="1" name="RTRIM"/>
-    <table id="6" parent="2" name="pk_incidents"/>
+    <table id="6" parent="2" name="pk_patients"/>
     <table id="7" parent="2" name="sqlite_master">
       <System>1</System>
     </table>
     <table id="8" parent="2" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <column id="9" parent="6" name="id">
+    <column id="9" parent="6" name="patient_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="10" parent="6" name="maker">
+    <column id="10" parent="6" name="lastName">
       <Position>2</Position>
       <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="11" parent="6" name="model">
+    <column id="11" parent="6" name="firstName">
       <Position>3</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="12" parent="6" name="tag">
+    <column id="12" parent="6" name="gender">
       <Position>4</Position>
-      <DataType>INTEGER|0s</DataType>
+      <DataType>TEXT|0s</DataType>
     </column>
-    <column id="13" parent="6" name="sn">
+    <column id="13" parent="6" name="dob">
       <Position>5</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="14" parent="6" name="type">
+    <column id="14" parent="6" name="age">
       <Position>6</Position>
-      <DataType>TEXT|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="15" parent="6" name="description">
+    <column id="15" parent="6" name="height">
       <Position>7</Position>
-      <DataType>TEXT|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="16" parent="6" name="warranty">
+    <column id="16" parent="6" name="weight">
       <Position>8</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="17" parent="6" name="purchaseDate">
+    <column id="17" parent="6" name="patientStreet">
       <Position>9</Position>
-      <DataType>INTEGER|0s</DataType>
+      <DataType>TEXT|0s</DataType>
     </column>
-    <column id="18" parent="6" name="isTitle1">
+    <column id="18" parent="6" name="patientCity">
       <Position>10</Position>
-      <DataType>INTEGER|0s</DataType>
-      <DefaultExpression>0</DefaultExpression>
+      <DataType>TEXT|0s</DataType>
     </column>
-    <column id="19" parent="6" name="isTitle9">
+    <column id="19" parent="6" name="patientState">
       <Position>11</Position>
-      <DataType>INTEGER|0s</DataType>
-      <DefaultExpression>0</DefaultExpression>
+      <DataType>TEXT|0s</DataType>
     </column>
-    <column id="20" parent="6" name="is31a">
+    <column id="20" parent="6" name="patientZip">
       <Position>12</Position>
       <DataType>INTEGER|0s</DataType>
-      <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="21" parent="6" name="sqlite_autoindex_pk_incidents_1">
+    <column id="21" parent="6" name="email">
+      <Position>13</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="22" parent="6" name="occupation">
+      <Position>14</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="23" parent="6" name="homePhoneNum">
+      <Position>15</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="24" parent="6" name="cellPhoneNum">
+      <Position>16</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <index id="25" parent="6" name="sqlite_autoindex_pk_patients_1">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
+      <ColNames>patient_id</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="22" parent="6">
-      <ColNames>id</ColNames>
+    <key id="26" parent="6">
+      <ColNames>patient_id</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>sqlite_autoindex_pk_incidents_1</UnderlyingIndexName>
+      <UnderlyingIndexName>sqlite_autoindex_pk_patients_1</UnderlyingIndexName>
     </key>
-    <key id="23" parent="6">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>sqlite_autoindex_pk_incidents_1</UnderlyingIndexName>
+    <key id="27" parent="6">
+      <ColNames>patient_id</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_pk_patients_1</UnderlyingIndexName>
     </key>
-    <column id="24" parent="7" name="type">
+    <column id="28" parent="7" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="25" parent="7" name="name">
+    <column id="29" parent="7" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="26" parent="7" name="tbl_name">
+    <column id="30" parent="7" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="27" parent="7" name="rootpage">
+    <column id="31" parent="7" name="rootpage">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="28" parent="7" name="sql">
+    <column id="32" parent="7" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="29" parent="8" name="name">
+    <column id="33" parent="8" name="name">
       <Position>1</Position>
     </column>
-    <column id="30" parent="8" name="seq">
+    <column id="34" parent="8" name="seq">
       <Position>2</Position>
     </column>
   </database-model>
