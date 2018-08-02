@@ -69,7 +69,7 @@ class DataHandler {
             bootNum INTEGER,
             shopName TEXT,
             shopStreet TEXT,
-            shopCity TEXT
+            shopCity TEXT,
             FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
         )`);
     });
