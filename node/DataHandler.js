@@ -12,12 +12,14 @@ class DataHandler {
 
     initDB() {
         this.db = new SQL.Database(`data/incident_data.db`, (err) => {
+            this.db.run(`PRAGMA foreign_keys = on`);
             if (err) {
                 return console.error(err.message);
             }
             console.log(`Connected to Sqlite3 DB`);
         });
-        this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
+        this.db.serialize(() => {
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
             patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             lastName TEXT NOT NULL,
             firstName TEXT,
@@ -35,29 +37,47 @@ class DataHandler {
             homePhoneNum TEXT,
             cellPhoneNum TEXT
         )`);
-
         this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientHistory (
             patientHistory_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             patient_id INTEGER NOT NULL,
-            FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION,
             priorInjury TEXT,
             yearInjured INTEGER,
             healthInsurance INTEGER,
             medications TEXT,
             ticketType TEXT,
-            groupType TEXT
+            groupType TEXT,
+            FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
         )`);
-
         this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
             incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             patient_id INTEGER NOT NULL,
-            FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION,
             day TEXT,
             date TEXT,
-            incidentTime TEXT
+            incidentTime TEXT,
+            location TEXT,
+            specificLocation TEXT,
+            ability TEXT,
+            inLesson INTEGER,
+            timesWhere INTEGER,
+            numTimesToday INTEGER,
+            numTimesPrior INTEGER,
+            removedBy INTEGER,
+            equipType INTEGER,
+            otherEquip TEXT,
+            owner INTEGER,
+            skiNum INETGER,
+            bootNum INTEGER,
+            shopName TEXT,
+            shopStreet TEXT,
+            shopCity TEXT
+            FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
         )`);
+    });
+
+
         console.log(`Sqlite table -pk_incidents- created`);
         this.db.run(`PRAGMA AUTO_VACUUM = FULL`);
+        this.db.close();
     }
 
     static renderDom(path, contentType, callback, encoding) {
