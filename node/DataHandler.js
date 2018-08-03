@@ -13,6 +13,7 @@ class DataHandler {
     initDB() {
         this.db = new SQL.Database(`data/incident_data.db`, (err) => {
             this.db.run(`PRAGMA foreign_keys = on`);
+            this.db.run(`PRAGMA AUTO_VACUUM = FULL`);
             if (err) {
                 return console.error(err.message);
             }
@@ -20,63 +21,112 @@ class DataHandler {
         });
         this.db.serialize(() => {
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
-            patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-            lastName TEXT NOT NULL,
-            firstName TEXT,
-            gender TEXT,
-            dob TEXT,
-            age INTEGER,
-            height INTEGER,
-            weight INTEGER,
-            patientStreet TEXT,
-            patientCity TEXT,
-            patientState TEXT,
-            patientZip INTEGER,
-            email TEXT,
-            occupation TEXT,
-            homePhoneNum TEXT,
-            cellPhoneNum TEXT
-        )`);
-        this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientHistory (
-            patientHistory_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-            patient_id INTEGER NOT NULL,
-            priorInjury TEXT,
-            yearInjured INTEGER,
-            healthInsurance INTEGER,
-            medications TEXT,
-            ticketType TEXT,
-            groupType TEXT,
-            FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
-        )`);
-        this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
-            incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-            patient_id INTEGER NOT NULL,
-            day TEXT,
-            date TEXT,
-            incidentTime TEXT,
-            location TEXT,
-            specificLocation TEXT,
-            ability TEXT,
-            inLesson INTEGER,
-            timesWhere INTEGER,
-            numTimesToday INTEGER,
-            numTimesPrior INTEGER,
-            removedBy INTEGER,
-            equipType INTEGER,
-            otherEquip TEXT,
-            owner INTEGER,
-            skiNum INETGER,
-            bootNum INTEGER,
-            shopName TEXT,
-            shopStreet TEXT,
-            shopCity TEXT,
-            FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
-        )`);
-    });
-
-
+                patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                lastName TEXT NOT NULL,
+                firstName TEXT,
+                gender TEXT,
+                dob TEXT,
+                age INTEGER,
+                height INTEGER,
+                weight INTEGER,
+                patientStreet TEXT,
+                patientCity TEXT,
+                patientState TEXT,
+                patientZip INTEGER,
+                email TEXT,
+                occupation TEXT,
+                homePhoneNum TEXT,
+                cellPhoneNum TEXT,
+                ability TEXT
+            )`);
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientHistory (
+                patientHistory_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                patient_id INTEGER NOT NULL,
+                priorInjury TEXT,
+                yearInjured INTEGER,
+                healthInsurance INTEGER,
+                medications TEXT,
+                ticketType TEXT,
+                groupType TEXT,
+                FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+            )`);
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientEquip (
+                patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                patient_id INTEGER NOT NULL,
+                removedBy INTEGER,
+                equipType INTEGER,
+                otherEquip TEXT,
+                owner INTEGER,
+                skiNum INTEGER,
+                bootNum INTEGER,
+                shopName TEXT,
+                shopStreet TEXT,
+                shopCity TEXT,
+                shopState TEXT,
+                shopZip INTEGER,
+                bindingMake TEXT,
+                bindingModel TEXT,
+                leftDinToe INTEGER,
+                leftDinHeel INTEGER,
+                rightDinToe INTEGER,
+                rightDinHeel INTEGER,
+                helmet INTEGER,
+                helmetRental INTEGER,
+                helmetNum INTEGER,
+                FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+            )`);
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
+                incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                patient_id INTEGER NOT NULL,
+                day TEXT,
+                date TEXT,
+                inLesson INTEGER,
+                timesWhere INTEGER,
+                numTimesToday INTEGER,
+                numTimesPrior INTEGER,
+                incidentTime TEXT,
+                video TEXT,
+                videoName TEXT,
+                incidentDescription TEXT,
+                statementTaker TEXT,
+                witnessData TEXT,
+                reportCompleter TEXT,
+                dateComplete TEXT,
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+            )`);
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_siteData (
+                siteData_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                patient_id INTEGER NOT NULL,
+                location TEXT,
+                specificLocation TEXT,
+                sceneSurface TEXT,
+                sceneSurfaceOther TEXT,
+                sceneVisibility TEXT,
+                temp INTEGER,
+                wind TEXT,                
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+            )`);
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_firstAid (
+                firstAid_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                patient_id INTEGER NOT NULL,
+                injuryType TEXT,
+                injuryTypeOther TEXT,
+                injuryZone TEXT,
+                injuryZoneOther TEXT,
+                hillFirstAid TEXT,
+                patrolRoomAid TEXT,
+                scenePatrollers TEXT,
+                transportPatrollers TEXT,
+                aidRoomPatrollers TEXT,
+                arrive TEXT,
+                arrivalOther TEXT,
+                leave TEXT,
+                dest TEXT,
+                destOther TEXT,
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+            )`);
+        });
         console.log(`Sqlite table -pk_incidents- created`);
-        this.db.run(`PRAGMA AUTO_VACUUM = FULL`);
         this.db.close();
     }
 
