@@ -8,6 +8,9 @@
   },
   "author": "Howard Bates",
   "license": "MIT",
+  "engines": {
+    "node": ">= 10.0.0"
+  },
   "dependencies": {
     "ejs": "latest",
     "formidable": "latest",
