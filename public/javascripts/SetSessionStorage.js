@@ -319,6 +319,33 @@ export default class SetSessionStorage {
         sessionStorage.setItem('reportCompleter', document.getElementById('reportCompleter_0').value);
         sessionStorage.setItem('dateComplete', document.getElementById('dateComplete').value);
 
+        SetSessionStorage.passData();
+
+        return false;
+    }
+
+    static passData() {
+        // https://stackoverflow.com/a/41854807
+        let data = {};
+        for (let i = 0; i < sessionStorage.length; i++) {
+            let key = sessionStorage.key(i);
+            data[key] = sessionStorage.getItem(key);
+        }
+        data = JSON.stringify(data);
+        fetch(document.url, {
+            method: 'POST',
+            body: data,
+            headers: {
+                'x-requested-with': 'fetch.0',
+                'mode': 'no-cors'
+            }
+        }).then((response) => {
+            console.log(response.text());
+            return response.json();
+        }).catch((errpr) => {
+            // console.log(error);
+        });
+
         return false;
     }
 }

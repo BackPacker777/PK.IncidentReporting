@@ -16,10 +16,12 @@ class DataHandler {
             this.db.run(`PRAGMA AUTO_VACUUM = FULL`);
             if (err) {
                 return console.error(err.message);
+            } else {
+                console.log(`Connected to -incident_data.db- Sqlite3 DB`);
             }
-            console.log(`Connected to Sqlite3 DB`);
         });
         this.db.serialize(() => {
+            console.log(`Creating -pk_patients- table`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
                 patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                 lastName TEXT NOT NULL,
@@ -37,18 +39,13 @@ class DataHandler {
                 occupation TEXT,
                 homePhoneNum TEXT,
                 cellPhoneNum TEXT,
-                ability TEXT
-            )`);
-            this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientHistory (
-                patientHistory_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                patient_id INTEGER NOT NULL,
+                ability TEXT,
                 priorInjury TEXT,
                 yearInjured INTEGER,
                 healthInsurance INTEGER,
                 medications TEXT,
                 ticketType TEXT,
-                groupType TEXT,
-                FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+                groupType TEXT
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientEquip (
                 patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -126,8 +123,7 @@ class DataHandler {
                 FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
             )`);
         });
-        console.log(`Sqlite table -pk_incidents- created`);
-        this.db.close();
+        console.log(`Sqlite -pk- tables created`);
     }
 
     static renderDom(path, contentType, callback, encoding) {
@@ -190,16 +186,17 @@ class DataHandler {
         });
     }
 
-    static addData(data) {
-        DB.insert(data, (err, newDocs) => {
-            console.log(newDocs._id);
-        });
-    }
-
-    static generateResultsData(callback) {
-        DB.find({}, (err, docs) => {
-            callback(docs);
-        });
+    insertRow(data) {
+        data = JSON.parse(data);
+        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability)
+         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhone, data.cellPhone, data.ability],
+            function(err) {
+                if (err) {
+                    return console.log(err.message);
+                }
+            }
+        );
     }
 }
 

@@ -93,6 +93,17 @@ class app {
                         response.writeHead(200, {'content-type': 'application/json'});
                         response.end(JSON.stringify(fetchedData));
                     });
+                } else if (request.headers['x-requested-with'] === 'fetch.0') {
+                    const PARSER = require('querystring');
+                    let body = '';
+                    request.on('data', chunk => {
+                        body += chunk.toString();
+                    });
+                    request.on('end', () => {
+                        this.data_handler.insertRow(body);
+                        // console.log(PARSER.parse(body));
+                    });
+
                 } else {
                     response.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
                     response.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');

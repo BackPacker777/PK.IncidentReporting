@@ -1,5 +1,5 @@
 {
-  "name": "PK.IncidentReporting",
+  "name": "pk.incident.reporting",
   "version": "4.1.0",
   "description": "For generating Ski Patrol incident forms",
   "main": "bin/server",
@@ -12,8 +12,9 @@
     "node": ">= 10.0.0"
   },
   "dependencies": {
+    "body-parser": "latest",
     "ejs": "latest",
     "formidable": "latest",
-    "sqlite3": "latest"
+    "sqlite3": "^4.0.2"
   }
 }
