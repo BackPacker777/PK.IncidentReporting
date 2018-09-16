@@ -19,6 +19,7 @@ class main {
 
     prepApp() {
         document.getElementById('noPrint').style.display = 'none';
+        document.getElementById('archives').style.display = 'none';
         /*
         document.getElementById('personalInfo').style.display = 'none';
         document.getElementById('patientHistory').style.display = 'none';

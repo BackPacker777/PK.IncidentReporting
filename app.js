@@ -39,7 +39,13 @@ class app {
             };
 
             if (request.method === 'POST') {
-                if (request.headers['x-requested-with'] === 'XHR0') {
+                if (request.headers['x-requested-with'] === 'XHR00') {
+                    this.data_handler.getRowCount((count) => {
+                        count = count.toString();
+                        response.writeHead(200, {'content-type': 'text/plain'});
+                        response.end(count);
+                    });
+                } else if (request.headers['x-requested-with'] === 'XHR0') {
                     DATA_HANDLER.setBaseData('zip', (zipData) => {
                         zipData = JSON.stringify(zipData);
                         response.writeHead(200, {'content-type': 'application/json'});
@@ -92,6 +98,12 @@ class app {
                     DATA_HANDLER.generateResultsData((fetchedData) => {
                         response.writeHead(200, {'content-type': 'application/json'});
                         response.end(JSON.stringify(fetchedData));
+                    });
+                } else if (request.headers['x-requested-with'] === 'XHR7') {
+                    this.data_handler.getAllData((data) => {
+                        data = JSON.stringify(data);
+                        response.writeHead(200, {'content-type': 'application/json'});
+                        response.end(data);
                     });
                 } else if (request.headers['x-requested-with'] === 'fetch.0') {
                     const PARSER = require('querystring');

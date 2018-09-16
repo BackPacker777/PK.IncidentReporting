@@ -8,6 +8,7 @@ const SQL = require('sqlite3').verbose();
 class DataHandler {
     constructor() {
         this.initDB();
+        this.counter = null;
     }
 
     initDB() {
@@ -183,6 +184,26 @@ class DataHandler {
                 }
             }
             callback(user);
+        });
+    }
+
+    getRowCount(callback) {
+        this.db.get(`SELECT COUNT(*) as 'count' FROM pk_patients`, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                callback(result.count);
+            }
+        });
+    }
+
+    getAllData(callback) {
+        this.db.all(`SELECT * FROM pk_patients`, (err, rows) => {
+            if (err) {
+                console.log(err);
+            } else {
+                callback(rows);
+            }
         });
     }
 

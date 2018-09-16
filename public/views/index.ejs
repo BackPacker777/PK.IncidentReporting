@@ -5,15 +5,16 @@
 	<div class="small-6 columns">
 		<h2>PK Incident Reporting - 2019</h2>
 	</div>
-	<div class="small-2 columns"><br>v.2019.01</div>
-	<div class="small-2 columns vertical-center"><input type="reset" class="button" id="reset1" value="Start New"></div>
-	<div class="small-2 columns center">
+    <div class="small-2 columns text-center small-vertical-middle"><span class="button large expanded" id="archivesButton">Archives</span></div>
+	<div class="small-2 columns text-right medium-vertical-middle"><h5>INCIDENT #:</h5></div>
+    <div class="small-1 columns text-left medium-vertical-middle"><h5 id="incidentNumber">0</h5></div>
+	<div class="small-1 columns center">
 		<img src="public/images/NSP_Logo.png" alt="NSP Logo" id="nspLogo" width="80" height="100">
 	</div>
 </div>
 <div class="panel radius">
 	<form id="mainForm" action="javascript:0">
-		<div class="row">
+		<div class="row" id="topStuff">
 			<fieldset id="dateTime">
             <legend>Date &amp; Time</legend>
                 <div class="row">
@@ -50,7 +51,9 @@
 
 			<% include public/views/witness_completer.ejs %>
 
-			<div class="row">
+            <% include public/views/archives.ejs %>
+
+			<div class="row" id="bottomStuff">
 				<fieldset id="buttons">
 					<div class="row">
 						<div class="small-3 columns">
@@ -58,7 +61,7 @@
 							<!--<span class="button large" id="submit">Completed!</span>-->
 						</div>
 						<div class="small-3 columns float-right">
-							<input type="reset" class="button large alert float-right" id="reset2" value="Reset Form">
+							<input type="reset" class="button large alert float-right" id="reset" value="Reset Form">
 						</div>
 					</div>
 				</fieldset>

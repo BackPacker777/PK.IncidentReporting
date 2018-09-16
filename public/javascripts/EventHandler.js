@@ -5,11 +5,14 @@ import SetSessionStorage from './SetSessionStorage.js';
 
 export default class EventHandler {
     constructor(year, day, month) {
+        this.loadIncidentNumber();
         this.loadZipData();
         this.loadHills();
         this.loadLifts();
         this.calculateAge(year, month, day);
         this.handlePatientZip();
+        this.handleArchivesButton();
+        this.handleReturnButton();
         this.handleLocation();
         this.handleLesson();
         this.handleNumOther();
@@ -26,6 +29,13 @@ export default class EventHandler {
         this.handlePatrollers("reportCompleter", 0);
         this.handleSubmit();
         this.handleReset();
+    }
+
+    loadIncidentNumber() {
+        this.performAjax("XHR00", 0, (response) => {
+            response = Number(response) + 1;
+            document.getElementById(`incidentNumber`).innerText = String(response);
+        });
     }
 
     loadZipData() {
@@ -69,6 +79,50 @@ export default class EventHandler {
                 }
             }
         });
+    }
+
+    handleArchivesButton() {
+        document.getElementById("archivesButton").addEventListener("click", () => {
+            this.setDisplay('archives', 1);
+            this.performAjax("XHR7", 0, (response) => {
+                response = JSON.parse(`[${response}]`);
+                // console.log(response[0][0]);
+                for (let i = 0; i < response.length; i++) {
+                    for (let j = 0; j < response[i].length; j++) {
+                        document.getElementById(`incidentData`).innerText += `Last Name: ${response[i][j].lastName},  First Name: ${response[i][j].firstName}, Gender: ${response[i][j].gender}, DOB: ${response[i][j].dob}\n`;
+                    }
+                }
+            });
+        });
+    }
+
+    handleReturnButton() {
+        document.getElementById("returnButton").addEventListener("click", () => {
+            this.setDisplay('archives', 0);
+        });
+    }
+
+    setDisplay(whichDiv, visibility) {
+        let divs = ['topMast','topStuff','personalInfo','patientHistory','locations','lifts','hills','history'
+            ,'equipment','incidentDesc','conditions','injury','injuryZone','firstAid','patrollers','transportDestination'
+            ,'witness','completers','bottomStuff','archives'];
+        for (let i = 0; i < divs.length; i++) {
+            if (visibility === 0) {
+                if (divs[i] !== whichDiv) {
+                    document.getElementById(divs[i]).style.display = 'block';
+                }
+                else {
+                    document.getElementById(divs[i]).style.display = 'none';
+                }
+            } else {
+                if (divs[i] !== whichDiv) {
+                    document.getElementById(divs[i]).style.display = 'none';
+                }
+                else {
+                    document.getElementById(divs[i]).style.display = 'block';
+                }
+            }
+        }
     }
 
     handleLocation() {
@@ -372,10 +426,7 @@ export default class EventHandler {
     }
 
     handleReset() {
-        document.getElementById("reset1").addEventListener("click", () => {
-            window.location.reload();
-        });
-        document.getElementById("reset2").addEventListener("click", () => {
+        document.getElementById("reset").addEventListener("click", () => {
             window.location.reload();
         });
     }
