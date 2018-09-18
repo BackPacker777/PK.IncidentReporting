@@ -209,15 +209,16 @@ class DataHandler {
 
     insertRow(data) {
         data = JSON.parse(data);
-        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability)
-         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhone, data.cellPhone, data.ability],
+        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability, priorInjury, yearInjured, healthInsurance, medications, ticketType, groupType)
+         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhone, data.cellPhone, data.data.ability, data.priorInjury, data.yearInjured, data.healthInsurance, data.medications, data.ticketType, data.groupType],
             function(err) {
                 if (err) {
                     return console.log(err.message);
                 }
             }
         );
+
     }
 }
 

@@ -113,7 +113,7 @@ class app {
                     });
                     request.on('end', () => {
                         this.data_handler.insertRow(body);
-                        // console.log(PARSER.parse(body));
+                        console.log(PARSER.parse(body));
                     });
 
                 } else {
