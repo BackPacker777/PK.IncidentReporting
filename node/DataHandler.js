@@ -49,29 +49,29 @@ class DataHandler {
                 groupType TEXT
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientEquip (
-                patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                patient_id INTEGER NOT NULL,
-                removedBy INTEGER,
-                equipType INTEGER,
-                otherEquip TEXT,
-                owner INTEGER,
-                skiNum INTEGER,
-                bootNum INTEGER,
-                shopName TEXT,
-                shopStreet TEXT,
-                shopCity TEXT,
-                shopState TEXT,
-                shopZip INTEGER,
-                bindingMake TEXT,
-                bindingModel TEXT,
-                leftDinToe INTEGER,
-                leftDinHeel INTEGER,
-                rightDinToe INTEGER,
-                rightDinHeel INTEGER,
-                helmet INTEGER,
-                helmetRental INTEGER,
-                helmetNum INTEGER,
-                FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+              patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+              patient_id INTEGER NOT NULL,
+              removedBy INTEGER,
+              equipType INTEGER,
+              otherEquip TEXT,
+              owner INTEGER,
+              skiNum INTEGER,
+              bootNum INTEGER,
+              shopName TEXT,
+              shopStreet TEXT,
+              shopCity TEXT,
+              shopState TEXT,
+              shopZip INTEGER,
+              bindingMake TEXT,
+              bindingModel TEXT,
+              leftDinToe INTEGER,
+              leftDinHeel INTEGER,
+              rightDinToe INTEGER,
+              rightDinHeel INTEGER,
+              helmet INTEGER,
+              helmetRental INTEGER,
+              helmetNum INTEGER,
+            FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
                 incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -211,14 +211,49 @@ class DataHandler {
         data = JSON.parse(data);
         this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability, priorInjury, yearInjured, healthInsurance, medications, ticketType, groupType)
          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhone, data.cellPhone, data.data.ability, data.priorInjury, data.yearInjured, data.healthInsurance, data.medications, data.ticketType, data.groupType],
+            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhone, data.cellPhone, data.ability, data.priorInjury, data.yearInjured, data.healthInsurance, data.medications, data.ticketType, data.groupType],
             function(err) {
                 if (err) {
                     return console.log(err.message);
                 }
             }
         );
-
+        this.db.run(`INSERT INTO pk_patientEquip (patientEquip_id, patient_id, removedBy, equipType, otherEquip, owner, skiNum, bootNum, shopName, shopStreet, shopCity, shopState, shopZip, bindingMake, bindingModel, leftDinToe, leftDinHeel, rightDinToe, rightDinHeel, helmet, helmetRental, helmetNum)
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [data.patientEquip_id, data.patient_id, data.removedBy, data.equipType, data.otherEquip, data.owner, data.skiNum, data.bootNum, data.shopName, data.shopStreet, data.shopCity, data.shopState, data.shopZip, data.bindingMake, data.bindingModel, data.leftDinToe, data.leftDinHeel, data.rightDinToe, data.rightDinHeel, data.helmet, data.helmetRental, data.helmetNumdata],
+            function(err) {
+                if (err) {
+                    return console.log(err.message);
+                }
+            }
+        );
+        this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, witnessData, reportCompleter, dateComplete)
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [data.incident_id, data.patient_id, data.day, data.date, data.inLesson, data.timesWhere, data.numTimesToday, data.numTimesPrior, data.incidentTime, data.video, data.videoName, data.incidentDescription, data.statementTaker, data.witnessData, data.reportCompleter, data.dateComplete],
+            function(err) {
+                if (err) {
+                    return console.log(err.message);
+                }
+            }
+        );
+        this.db.run(`INSERT INTO pk_siteData (siteData_id, patient_id, location, specificLocation, sceneSurface, sceneSurfaceOther, sceneVisibility, temp, wind)
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [data.siteData_id, data.patient_id, data.location, data.specificLocation, data.sceneSurface, data.sceneSurfaceOther, data.sceneVisibility, data.temp, data.wind],
+            function(err) {
+                if (err) {
+                    return console.log(err.message);
+                }
+            }
+        );
+        this.db.run(`INSERT INTO pk_firstAid (firstAid_id, patient_id, injuryType, injuryTypeOther, injuryZone, injuryZoneOther, hillFirstAid, patrolRoomAid, scenePatrollers, transportPatrollers, aidRoomPatrollers, arrive, arrivalOther, leave, dest, destOther)
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [data.firstAid_id, data.patient_id, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers, data.transportPatrollers, data.aidRoomPatrollers, data.arrive, data.arrivalOther, data.leave, data.dest, data.destOther],
+            function(err) {
+                if (err) {
+                    return console.log(err.message);
+                }
+            }
+        );
     }
 }
 
