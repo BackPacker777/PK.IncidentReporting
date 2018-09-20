@@ -25,7 +25,7 @@ class DataHandler {
             console.log(`Creating -pk_patients- table`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
                 patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                lastName TEXT NOT NULL,
+                lastName TEXT,
                 firstName TEXT,
                 gender TEXT,
                 dob TEXT,
@@ -50,7 +50,7 @@ class DataHandler {
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientEquip (
               patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-              patient_id INTEGER NOT NULL,
+              patient_id INTEGER,
               removedBy INTEGER,
               equipType INTEGER,
               otherEquip TEXT,
@@ -71,11 +71,11 @@ class DataHandler {
               helmet INTEGER,
               helmetRental INTEGER,
               helmetNum INTEGER,
-            FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+            FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
                 incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                patient_id INTEGER NOT NULL,
+                patient_id INTEGER,
                 day TEXT,
                 date TEXT,
                 inLesson INTEGER,
@@ -90,11 +90,11 @@ class DataHandler {
                 witnessData TEXT,
                 reportCompleter TEXT,
                 dateComplete TEXT,
-                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_siteData (
                 siteData_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                patient_id INTEGER NOT NULL,
+                patient_id INTEGER,
                 location TEXT,
                 specificLocation TEXT,
                 sceneSurface TEXT,
@@ -102,11 +102,11 @@ class DataHandler {
                 sceneVisibility TEXT,
                 temp INTEGER,
                 wind TEXT,                
-                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_firstAid (
                 firstAid_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                patient_id INTEGER NOT NULL,
+                patient_id INTEGER,
                 injuryType TEXT,
                 injuryTypeOther TEXT,
                 injuryZone TEXT,
@@ -121,7 +121,7 @@ class DataHandler {
                 leave TEXT,
                 dest TEXT,
                 destOther TEXT,
-                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE NO ACTION
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
         });
         console.log(`Sqlite -pk- tables created`);
