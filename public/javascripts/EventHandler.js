@@ -12,6 +12,7 @@ export default class EventHandler {
         this.calculateAge(year, month, day);
         this.handlePatientZip();
         this.handleArchivesButton();
+        this.handleArchiveSearching();
         this.handleReturnButton();
         this.handleLocation();
         this.handleLesson();
@@ -84,7 +85,10 @@ export default class EventHandler {
     handleArchivesButton() {
         document.getElementById("archivesButton").addEventListener("click", () => {
             this.setDisplay('archives', 1);
-            this.performAjax("XHR7", 0, (response) => {
+            document.getElementById("searchDate").style.display = 'none';
+            document.getElementById("searchLastName").style.display = 'none';
+            document.getElementById("searchIncidentID").style.display = 'none';
+            /*this.performAjax("XHR7", 0, (response) => {
                 response = JSON.parse(`[${response}]`);
                 // console.log(response[0][0]);
                 for (let i = 0; i < response.length; i++) {
@@ -92,8 +96,29 @@ export default class EventHandler {
                         document.getElementById(`incidentData`).innerText += `<br>Last Name: ${response[i][j].lastName},  First Name: ${response[i][j].firstName}, Date: ${response[i][j].date}, DOB: ${response[i][j].dob}\n`;
                     }
                 }
-            });
+            });*/
         });
+    }
+
+    handleArchiveSearching() {
+        let search = document.forms[0].elements["searchCriteria"];
+        for (let i = 0; i < search.length; i++) {
+            search[i].addEventListener("click", () => {
+                if (search[i].value === "date") {
+                    document.getElementById("searchDate").style.display = 'block';
+                    document.getElementById("searchLastName").style.display = 'none';
+                    document.getElementById("searchIncidentID").style.display = 'none';
+                } else if (search[i].value === "lastName") {
+                    document.getElementById("searchLastName").style.display = 'block';
+                    document.getElementById("searchDate").style.display = 'none';
+                    document.getElementById("searchIncidentID").style.display = 'none';
+                } else {
+                    document.getElementById("searchIncidentID").style.display = 'block';
+                    document.getElementById("searchLastName").style.display = 'none';
+                    document.getElementById("searchDate").style.display = 'none';
+                }
+            });
+        }
     }
 
     handleReturnButton() {

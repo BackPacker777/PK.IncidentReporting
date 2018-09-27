@@ -3,7 +3,23 @@
         <div class="small-12 columns"><h2>PK Incident Archives</h2></div>
     </div>
     <div class="row">
-        <div class="small-4 columns" id="incidentData"></div>
+        <div class="small-3 columns">
+            <h4>Search Criteria:</h4>
+        </div>
+        <div class="small-5 columns">
+            <input type="radio" name="searchCriteria" value="date" required><label for="searchDate">Incident Date</label>
+            <input type="radio" name="searchCriteria" value="lastName" required><label for="searchLastName">Patient Last Name</label>
+            <input type="radio" name="searchCriteria" value="incidentID" required><label for="searchIncidentID">Incident ID</label>
+        </div>
+        <div class="small-4 columns" id="searchDate">
+            <input type="date" id="searchDateInput" name="searchDateInput" placeholder="Date">
+        </div>
+        <div class="small-4 columns" id="searchLastName">
+            <input type="text" id="searchLastNameInput" name="searchLastNameInput" placeholder="Last Name">
+        </div>
+        <div class="small-4 columns" id="searchIncidentID">
+            <input type="number" id="searchIncidentIDInput" name="searchIncidentIDInput" placeholder="Incident Number" maxlength="4">
+        </div>
     </div>
     <div class="row">
         <div class="small-12 columns" id="incidentData"></div>
