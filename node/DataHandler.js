@@ -208,8 +208,7 @@ class DataHandler {
     }
 
     getID(callback) {
-        this.theKey = null;
-        this.db.get(`SELECT Patient_id patient_id FROM pk_patients`, (err, row) => {
+        this.db.get(`SELECT patient_id FROM pk_patients ORDER BY patient_id DESC LIMIT 1`, (err, row) => {
             callback(row.patient_id);
         });
     }
@@ -226,48 +225,44 @@ class DataHandler {
             }
         );
 
-        this.theKey = this.getID((id) => {
-            return id;
+        this.getID((patient_id) => {
+            this.db.run(`INSERT INTO pk_patientEquip (patientEquip_id, patient_id, removedBy, equipType, otherEquip, owner, skiNum, bootNum, shopName, shopStreet, shopCity, shopState, shopZip, bindingMake, bindingModel, leftDinToe, leftDinHeel, rightDinToe, rightDinHeel, helmet, helmetRental, helmetNum)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.patientEquip_id, patient_id, data.removedBy, data.equipType, data.otherEquip, data.owner, data.skiNum, data.bootNum, data.shopName, data.shopStreet, data.shopCity, data.shopState, data.shopZip, data.bindingMake, data.bindingModel, data.leftDinToe, data.leftDinHeel, data.rightDinToe, data.rightDinHeel, data.helmet, data.helmetRental, data.helmetNumdata],
+                function(err) {
+                    if (err) {
+                        return console.log(err.message);
+                    }
+                }
+            );
+            this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, witnessData, reportCompleter, dateComplete)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.incident_id, patient_id, data.day, data.date, data.inLesson, data.timesWhere, data.numTimesToday, data.numTimesPrior, data.incidentTime, data.video, data.videoName, data.incidentDescription, data.statementTaker, data.witnessData, data.reportCompleter, data.dateComplete],
+                function(err) {
+                    if (err) {
+                        return console.log(err.message);
+                    }
+                }
+            );
+            this.db.run(`INSERT INTO pk_siteData (siteData_id, patient_id, location, specificLocation, sceneSurface, sceneSurfaceOther, sceneVisibility, temp, wind)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.siteData_id, patient_id, data.location, data.specificLocation, data.sceneSurface, data.sceneSurfaceOther, data.sceneVisibility, data.temp, data.wind],
+                function(err) {
+                    if (err) {
+                        return console.log(err.message);
+                    }
+                }
+            );
+            this.db.run(`INSERT INTO pk_firstAid (firstAid_id, patient_id, injuryType, injuryTypeOther, injuryZone, injuryZoneOther, hillFirstAid, patrolRoomAid, scenePatrollers, transportPatrollers, aidRoomPatrollers, arrive, arrivalOther, leave, dest, destOther)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.firstAid_id, patient_id, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers, data.transportPatrollers, data.aidRoomPatrollers, data.arrive, data.arrivalOther, data.leave, data.dest, data.destOther],
+                function(err) {
+                    if (err) {
+                        return console.log(err.message);
+                    }
+                }
+            );
         });
-
-        console.log(`KEY = ${this.theKey}`);
-
-        this.db.run(`INSERT INTO pk_patientEquip (patientEquip_id, patient_id, removedBy, equipType, otherEquip, owner, skiNum, bootNum, shopName, shopStreet, shopCity, shopState, shopZip, bindingMake, bindingModel, leftDinToe, leftDinHeel, rightDinToe, rightDinHeel, helmet, helmetRental, helmetNum)
-          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.patientEquip_id, this.theKey, data.removedBy, data.equipType, data.otherEquip, data.owner, data.skiNum, data.bootNum, data.shopName, data.shopStreet, data.shopCity, data.shopState, data.shopZip, data.bindingMake, data.bindingModel, data.leftDinToe, data.leftDinHeel, data.rightDinToe, data.rightDinHeel, data.helmet, data.helmetRental, data.helmetNumdata],
-            function(err) {
-                if (err) {
-                    return console.log(err.message);
-                }
-            }
-        );
-        this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, witnessData, reportCompleter, dateComplete)
-          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.incident_id, this.theKey, data.day, data.date, data.inLesson, data.timesWhere, data.numTimesToday, data.numTimesPrior, data.incidentTime, data.video, data.videoName, data.incidentDescription, data.statementTaker, data.witnessData, data.reportCompleter, data.dateComplete],
-            function(err) {
-                if (err) {
-                    return console.log(err.message);
-                }
-            }
-        );
-        this.db.run(`INSERT INTO pk_siteData (siteData_id, patient_id, location, specificLocation, sceneSurface, sceneSurfaceOther, sceneVisibility, temp, wind)
-          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.siteData_id, this.theKey, data.location, data.specificLocation, data.sceneSurface, data.sceneSurfaceOther, data.sceneVisibility, data.temp, data.wind],
-            function(err) {
-                if (err) {
-                    return console.log(err.message);
-                }
-            }
-        );
-        this.db.run(`INSERT INTO pk_firstAid (firstAid_id, patient_id, injuryType, injuryTypeOther, injuryZone, injuryZoneOther, hillFirstAid, patrolRoomAid, scenePatrollers, transportPatrollers, aidRoomPatrollers, arrive, arrivalOther, leave, dest, destOther)
-          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.firstAid_id, this.theKey, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers, data.transportPatrollers, data.aidRoomPatrollers, data.arrive, data.arrivalOther, data.leave, data.dest, data.destOther],
-            function(err) {
-                if (err) {
-                    return console.log(err.message);
-                }
-            }
-        );
     }
 }
 
