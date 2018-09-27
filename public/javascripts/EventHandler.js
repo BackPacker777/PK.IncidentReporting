@@ -108,14 +108,23 @@ export default class EventHandler {
                     document.getElementById("searchDate").style.display = 'block';
                     document.getElementById("searchLastName").style.display = 'none';
                     document.getElementById("searchIncidentID").style.display = 'none';
+                    document.getElementById("searchDateInput").addEventListener("blur", () => {
+                        //fetch sql results
+                    });
                 } else if (search[i].value === "lastName") {
                     document.getElementById("searchLastName").style.display = 'block';
                     document.getElementById("searchDate").style.display = 'none';
                     document.getElementById("searchIncidentID").style.display = 'none';
+                    document.getElementById("searchLastNameInput").addEventListener("blur", () => {
+                        //fetch sql results
+                    });
                 } else {
                     document.getElementById("searchIncidentID").style.display = 'block';
                     document.getElementById("searchLastName").style.display = 'none';
                     document.getElementById("searchDate").style.display = 'none';
+                    document.getElementById("searchIncidentDateInput").addEventListener("blur", () => {
+                        //fetch sql results
+                    });
                 }
             });
         }
