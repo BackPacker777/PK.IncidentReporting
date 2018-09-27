@@ -89,7 +89,7 @@ export default class EventHandler {
                 // console.log(response[0][0]);
                 for (let i = 0; i < response.length; i++) {
                     for (let j = 0; j < response[i].length; j++) {
-                        document.getElementById(`incidentData`).innerText += `Last Name: ${response[i][j].lastName},  First Name: ${response[i][j].firstName}, Gender: ${response[i][j].gender}, DOB: ${response[i][j].dob}\n`;
+                        document.getElementById(`incidentData`).innerText += `<br>Last Name: ${response[i][j].lastName},  First Name: ${response[i][j].firstName}, Date: ${response[i][j].date}, DOB: ${response[i][j].dob}\n`;
                     }
                 }
             });
