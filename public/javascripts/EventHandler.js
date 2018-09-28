@@ -109,21 +109,21 @@ export default class EventHandler {
                     document.getElementById("searchLastName").style.display = 'none';
                     document.getElementById("searchIncidentID").style.display = 'none';
                     document.getElementById("searchDateInput").addEventListener("blur", () => {
-                        //fetch sql results
+                        this.performFetch(document.getElementById("searchDateInput").value);
                     });
                 } else if (search[i].value === "lastName") {
                     document.getElementById("searchLastName").style.display = 'block';
                     document.getElementById("searchDate").style.display = 'none';
                     document.getElementById("searchIncidentID").style.display = 'none';
                     document.getElementById("searchLastNameInput").addEventListener("blur", () => {
-                        //fetch sql results
+                        this.performFetch(document.getElementById("searchLastNameInput").value);
                     });
                 } else {
                     document.getElementById("searchIncidentID").style.display = 'block';
                     document.getElementById("searchLastName").style.display = 'none';
                     document.getElementById("searchDate").style.display = 'none';
                     document.getElementById("searchIncidentDateInput").addEventListener("blur", () => {
-                        //fetch sql results
+                        this.performFetch(document.getElementById("searchIncidentDateInput").value);
                     });
                 }
             });
@@ -441,11 +441,6 @@ export default class EventHandler {
     handleSubmit() {
         document.getElementById("submit").addEventListener("click", () => {
             if (document.getElementById("mainForm").checkValidity()) {
-                //disabled DB functionality until requested
-                /*let data = new FormData(document.querySelector("#mainForm"));
-                this.performAjax("XHR5", data, (response) => {
-                    console.log(response);
-                });*/
                 new SetSessionStorage();
                 window.open('/public/views/results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
                 if (document.getElementById('equipAlpine').checked && document.getElementById('ownerRent').checked || document.getElementById('ownerDemo').checked) {
@@ -462,6 +457,23 @@ export default class EventHandler {
     handleReset() {
         document.getElementById("reset").addEventListener("click", () => {
             window.location.reload();
+        });
+    }
+
+    performFetch(criteria) {
+        console.log(criteria);
+        fetch(document.url, {
+            method: 'POST',
+            body: criteria,
+            headers: {
+                'x-requested-with': 'fetch.1',
+                'mode': 'no-cors'
+            }
+        }).then((response) => {
+            console.log(response.text());
+            // return response.json();
+        }).catch((errpr) => {
+            console.log(error);
         });
     }
 

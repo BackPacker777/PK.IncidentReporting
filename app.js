@@ -106,7 +106,7 @@ class app {
                         response.end(data);
                     });
                 } else if (request.headers['x-requested-with'] === 'fetch.0') {
-                    const PARSER = require('querystring');
+                    // const PARSER = require('querystring');
                     let body = '';
                     request.on('data', chunk => {
                         body += chunk.toString();
@@ -115,7 +115,12 @@ class app {
                         this.data_handler.insertRow(body);
                         // console.log(PARSER.parse(body));
                     });
-
+                } else if (request.headers['x-requested-with'] === 'fetch.1') {
+                    let body = '';
+                    request.on('data', (chunk) => {
+                        body += chunk.toString();
+                    });
+                    console.log(`BODY = ${body}`);
                 } else {
                     response.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
                     response.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
