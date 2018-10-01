@@ -109,24 +109,41 @@ export default class EventHandler {
                     document.getElementById("searchLastName").style.display = 'none';
                     document.getElementById("searchIncidentID").style.display = 'none';
                     document.getElementById("searchDateInput").addEventListener("blur", () => {
-                        this.performFetch(document.getElementById("searchDateInput").value);
+                        let search = ['date', document.getElementById("searchDateInput").value];
+                        this.performFetch(search);
                     });
                 } else if (search[i].value === "lastName") {
                     document.getElementById("searchLastName").style.display = 'block';
                     document.getElementById("searchDate").style.display = 'none';
                     document.getElementById("searchIncidentID").style.display = 'none';
                     document.getElementById("searchLastNameInput").addEventListener("blur", () => {
-                        this.performFetch(document.getElementById("searchLastNameInput").value);
+                        let search = ['lastName', document.getElementById("searchLastNameInput").value];
+                        this.performFetch(search);
                     });
                 } else {
                     document.getElementById("searchIncidentID").style.display = 'block';
                     document.getElementById("searchLastName").style.display = 'none';
                     document.getElementById("searchDate").style.display = 'none';
-                    document.getElementById("searchIncidentDateInput").addEventListener("blur", () => {
-                        this.performFetch(document.getElementById("searchIncidentDateInput").value);
+                    document.getElementById("searchIncidentIDInput").addEventListener("blur", () => {
+                        let search = ['incidentID', document.getElementById("searchIncidentIDInput").value];
+                        this.performFetch(search);
                     });
                 }
             });
+        }
+    }
+
+    displaySearchResults(data) {
+        if (data.length > 0) {
+            data = JSON.parse(data);
+            for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < data[i].length; j++) {
+                    console.log(data[i][j]);
+                    // document.getElementById(`incidentData`).innerText += `<br>Last Name: ${data[i][j].lastName},  First Name: ${data[i][j].firstName}, Date: ${data[i][j].date}, DOB: ${data[i][j].dob}\n`;
+                }
+            }
+        } else {
+            document.getElementById('incidentData').innerHTML = `<br><br><h1>Incident not found.</h1>`;
         }
     }
 
@@ -461,7 +478,6 @@ export default class EventHandler {
     }
 
     performFetch(criteria) {
-        console.log(criteria);
         fetch(document.url, {
             method: 'POST',
             body: criteria,
@@ -470,9 +486,10 @@ export default class EventHandler {
                 'mode': 'no-cors'
             }
         }).then((response) => {
-            console.log(response.text());
-            // return response.json();
-        }).catch((errpr) => {
+            return response.text();
+        }).then((data) => {
+            this.displaySearchResults(data);
+        }).catch((error) => {
             console.log(error);
         });
     }

@@ -197,6 +197,48 @@ class DataHandler {
         });
     }
 
+    queryData(search, callback) {
+        search = search.split(',');
+        let data = [];
+        if (search[0] === 'date') {
+            let dateArray = search[1].split('-');
+            dateArray[1] = parseInt(dateArray[1], 10);
+            let date = (dateArray[1] + '/' + dateArray[2] + '/' + dateArray[0]);
+            let sql = `SELECT * FROM pk_incidents INNER JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id WHERE date = ?`;
+            this.db.all(sql, [date], (err, rows) => {
+                if (err) {
+                    console.log(`DATE ERR = ${err}`);
+                } else {
+                    data.push(rows);
+                    console.log(data);
+                    callback(data);
+                }
+            });
+        } else if (search[0] === 'lastName') {
+            let sql = `SELECT * FROM pk_patients INNER JOIN pk_incidents ON pk_patients.patient_id = pk_incidents.patient_id WHERE pk_patients.lastName = ?`;
+            this.db.all(sql, [search[1]], (err, rows) => {
+                if (err) {
+                    console.log(`NAME ERR = ${err}`);
+                } else {
+                    data.push(rows);
+                    console.log(data);
+                    callback(data);
+                }
+            });
+        } else {
+            let sql = `SELECT * FROM pk_incidents INNER JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id WHERE incident_id = ?`;
+            this.db.all(sql, [search[1]], (err, rows) => {
+                if (err) {
+                    console.log(`ID ERR = ${err}`);
+                } else {
+                    data.push(rows);
+                    console.log(data);
+                    callback(data);
+                }
+            });
+        }
+    }
+
     getAllData(callback) {
         this.db.all(`SELECT * FROM pk_patients`, (err, rows) => {
             if (err) {

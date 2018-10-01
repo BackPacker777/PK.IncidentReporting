@@ -116,11 +116,17 @@ class app {
                         // console.log(PARSER.parse(body));
                     });
                 } else if (request.headers['x-requested-with'] === 'fetch.1') {
-                    let body = '';
-                    request.on('data', (chunk) => {
-                        body += chunk.toString();
+                    let criteria = '';
+                    request.on('data', (data) => {
+                        criteria += data.toString();
                     });
-                    console.log(`BODY = ${body}`);
+                    request.on('end', () => {
+                        this.data_handler.queryData(criteria, (data) => {
+                            data = JSON.stringify(data);
+                            response.writeHead(200, {'content-type': 'application/json'});
+                            response.end(data);
+                        });
+                    });
                 } else {
                     response.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
                     response.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
