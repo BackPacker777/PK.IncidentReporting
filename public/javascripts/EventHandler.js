@@ -138,8 +138,8 @@ export default class EventHandler {
             data = JSON.parse(data);
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
-                    console.log(data[i][j]);
-                    // document.getElementById(`incidentData`).innerText += `<br>Last Name: ${data[i][j].lastName},  First Name: ${data[i][j].firstName}, Date: ${data[i][j].date}, DOB: ${data[i][j].dob}\n`;
+                    // console.log(data[i][j]);
+                    document.getElementById(`incidentData`).innerText += `<br>Last Name: ${data[i][j].lastName},  First Name: ${data[i][j].firstName}, Date: ${data[i][j].date}, Incident Description ${data[i][j].incidentDescription}\n`;
                 }
             }
         } else {

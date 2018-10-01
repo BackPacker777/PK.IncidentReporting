@@ -1,7 +1,8 @@
 # TODO:
 * Once PK decides how they want archives, get it to search & create print form
-* Change rental addresses in all results
-* Update ALL sql tables with incident data, not just patients
+* ~~Change rental addresses in all results~~
+* ~~Update ALL sql tables with incident data, not just patients~~
+* Fix how sessionStorage saves variable data such as hill/lift & witnesses to database
 
 
 # URLs
