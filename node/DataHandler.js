@@ -96,6 +96,12 @@ class DataHandler {
                 siteData_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                 patient_id INTEGER,
                 location TEXT,
+                locationLift TEXT,
+                whichLift TEXT,
+                locationHill TEXT,
+                whichHill TEXT,
+                difficulty TEXT,
+                locationPremise TEXT,
                 specificLocation TEXT,
                 sceneSurface TEXT,
                 sceneSurfaceOther TEXT,
@@ -286,9 +292,9 @@ class DataHandler {
                     }
                 }
             );
-            this.db.run(`INSERT INTO pk_siteData (siteData_id, patient_id, location, specificLocation, sceneSurface, sceneSurfaceOther, sceneVisibility, temp, wind)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [data.siteData_id, patient_id, data.location, data.specificLocation, data.sceneSurface, data.sceneSurfaceOther, data.sceneVisibility, data.temp, data.wind],
+            this.db.run(`INSERT INTO pk_siteData (siteData_id, patient_id, location, locationLift, whichLift, locationHill, whichHill, difficulty, locationPremise, specificLocation, sceneSurface, sceneSurfaceOther, sceneVisibility, temp, wind)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.siteData_id, patient_id, data.location, data.locationLift, data.whichLift, data.locationHill, data.whichHill, data.difficulty, data.locationPremise, data.specificLocation, data.sceneSurface, data.sceneSurfaceOther, data.sceneVisibility, data.temp, data.wind],
                 function(err) {
                     if (err) {
                         return console.log(err.message);
