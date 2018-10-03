@@ -12,7 +12,6 @@ export default class EventHandler {
         this.calculateAge(year, month, day);
         this.handlePatientZip();
         this.handleArchivesButton();
-        this.handleArchiveSearching();
         this.handleReturnButton();
         this.handleLocation();
         this.handleLesson();
@@ -88,15 +87,7 @@ export default class EventHandler {
             document.getElementById("searchDate").style.display = 'none';
             document.getElementById("searchLastName").style.display = 'none';
             document.getElementById("searchIncidentID").style.display = 'none';
-            /*this.performAjax("XHR7", 0, (response) => {
-                response = JSON.parse(`[${response}]`);
-                // console.log(response[0][0]);
-                for (let i = 0; i < response.length; i++) {
-                    for (let j = 0; j < response[i].length; j++) {
-                        document.getElementById(`incidentData`).innerText += `<br>Last Name: ${response[i][j].lastName},  First Name: ${response[i][j].firstName}, Date: ${response[i][j].date}, DOB: ${response[i][j].dob}\n`;
-                    }
-                }
-            });*/
+            this.handleArchiveSearching();
         });
     }
 
