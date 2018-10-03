@@ -134,11 +134,11 @@ export default class SetSessionStorage {
             sessionStorage.setItem('owner', document.getElementById('ownerDemo').value);
             sessionStorage.setItem('skiNum', document.getElementById('skiNum').value);
             sessionStorage.setItem('bootNum', document.getElementById('bootNum').value);
-            sessionStorage.setItem('shopName', "Nub's Nob");
-            sessionStorage.setItem('shopStreet', "500 Nub's Nob Road");
-            sessionStorage.setItem('shopCity', "Harbor Springs");
+            sessionStorage.setItem('shopName', "Pine Knob");
+            sessionStorage.setItem('shopStreet', "778 Sashabaw Road");
+            sessionStorage.setItem('shopCity', "Clarkston");
             sessionStorage.setItem('shopState', "MI");
-            sessionStorage.setItem('shopZip', "49770");
+            sessionStorage.setItem('shopZip', "48348");
         }
         sessionStorage.setItem('bindingMake', document.getElementById('bindingMake').value);
         sessionStorage.setItem('bindingModel', document.getElementById('bindingModel').value);
