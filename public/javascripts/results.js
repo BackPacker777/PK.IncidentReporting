@@ -419,7 +419,7 @@ class results {
             if (sessionStorage.getItem('sceneSurface').match("powder")) {
                 document.getElementById('powder').checked = true;
             }
-            if (sessionStorage.getItem('sceneSurface').match("packedpowdr")) {
+            if (sessionStorage.getItem('sceneSurface').match("packedpowder")) {
                 document.getElementById('packedPowder').checked = true;
             }
             if (sessionStorage.getItem('sceneSurface').match("hardpacked")) {
