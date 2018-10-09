@@ -22,7 +22,6 @@ class DataHandler {
             }
         });
         this.db.serialize(() => {
-            console.log(`Creating -pk_patients- table`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patients (
                 patient_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                 lastName TEXT,
@@ -71,7 +70,7 @@ class DataHandler {
               helmet INTEGER,
               helmetRental INTEGER,
               helmetNum INTEGER,
-            FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
+              FOREIGN KEY (patient_id) REFERENCES pk_patients(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_incidents (
                 incident_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -90,6 +89,16 @@ class DataHandler {
                 witnessData TEXT,
                 reportCompleter TEXT,
                 dateComplete TEXT,
+                FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
+            )`);
+            this.db.run(`CREATE TABLE IF NOT EXISTS pk_witnesses (
+                witness_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                patient_id INTEGER,
+                name TEXT,
+                street TEXT,
+                city_state_zip TEXT,
+                home_phone TEXT,
+                cell_phone TEXT,
                 FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_siteData (
@@ -119,9 +128,24 @@ class DataHandler {
                 injuryZoneOther TEXT,
                 hillFirstAid TEXT,
                 patrolRoomAid TEXT,
-                scenePatrollers TEXT,
-                transportPatrollers TEXT,
-                aidRoomPatrollers TEXT,
+                scenePatrollers_0 TEXT,
+                scenePatrollers_1 TEXT,
+                scenePatrollers_2 TEXT,
+                scenePatrollers_3 TEXT,
+                scenePatrollers_4 TEXT,
+                scenePatrollers_5 TEXT,
+                transportPatrollers_0 TEXT,
+                transportPatrollers_1 TEXT,
+                transportPatrollers_2 TEXT,
+                transportPatrollers_3 TEXT,
+                transportPatrollers_4 TEXT,
+                transportPatrollers_5 TEXT,
+                aidRoomPatrollers_0 TEXT,
+                aidRoomPatrollers_1 TEXT,
+                aidRoomPatrollers_2 TEXT,
+                aidRoomPatrollers_3 TEXT,
+                aidRoomPatrollers_4 TEXT,
+                aidRoomPatrollers_5 TEXT,
                 arrive TEXT,
                 arrivalOther TEXT,
                 leave TEXT,
@@ -272,7 +296,6 @@ class DataHandler {
                 }
             }
         );
-
         this.getID((patient_id) => {
             this.db.run(`INSERT INTO pk_patientEquip (patientEquip_id, patient_id, removedBy, equipType, otherEquip, owner, skiNum, bootNum, shopName, shopStreet, shopCity, shopState, shopZip, bindingMake, bindingModel, leftDinToe, leftDinHeel, rightDinToe, rightDinHeel, helmet, helmetRental, helmetNum)
               VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -301,9 +324,29 @@ class DataHandler {
                     }
                 }
             );
-            this.db.run(`INSERT INTO pk_firstAid (firstAid_id, patient_id, injuryType, injuryTypeOther, injuryZone, injuryZoneOther, hillFirstAid, patrolRoomAid, scenePatrollers, transportPatrollers, aidRoomPatrollers, arrive, arrivalOther, leave, dest, destOther)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [data.firstAid_id, patient_id, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers, data.transportPatrollers, data.aidRoomPatrollers, data.arrive, data.arrivalOther, data.leave, data.dest, data.destOther],
+            let counter = 0;
+            while (counter >= 0) {
+                let wName = `data.w${counter}Name`;
+                if (eval(wName)) {
+                    let wStreet = `data.w${counter}Street`, wCityStateZip = `data.w${counter}CityStateZip`, wHomePhone = `data.w${counter}HomePhoneNum`, wCellPhone = `data.w${counter}CellPhoneNum`;
+                    this.db.run(`INSERT INTO pk_witnesses (witness_id, patient_id, name, street, city_state_zip, home_phone, cell_phone)
+                        VALUES(?, ?, ?, ?, ?, ?, ?)`,
+                        [data.witness_id, patient_id, eval(wName), eval(wStreet), eval(wCityStateZip), eval(wHomePhone), eval(wCellPhone)],
+                        function(err) {
+                            if (err) {
+                                return console.log(err.message);
+                            }
+                        }
+                    );
+                } else {
+                    counter = null;
+                    break;
+                }
+                counter++;
+            }
+            this.db.run(`INSERT INTO pk_firstAid (firstAid_id, patient_id, injuryType, injuryTypeOther, injuryZone, injuryZoneOther, hillFirstAid, patrolRoomAid, scenePatrollers_0, scenePatrollers_1, scenePatrollers_2, scenePatrollers_3, scenePatrollers_4, scenePatrollers_5, transportPatrollers_0, transportPatrollers_1, transportPatrollers_2, transportPatrollers_3, transportPatrollers_4, transportPatrollers_5, aidRoomPatrollers_0, aidRoomPatrollers_1, aidRoomPatrollers_2, aidRoomPatrollers_3, aidRoomPatrollers_4, aidRoomPatrollers_5, arrive, arrivalOther, leave, dest, destOther)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.firstAid_id, patient_id, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers_0, data.scenePatrollers_1, data.scenePatrollers_2, data.scenePatrollers_3, data.scenePatrollers_4, data.scenePatrollers_5, data.transportPatrollers_0, data.transportPatrollers_1, data.transportPatrollers_2, data.transportPatrollers_3, data.transportPatrollers_4, data.transportPatrollers_5, data.aidRoomPatrollers_0, data.aidRoomPatrollers_1, data.aidRoomPatrollers_2, data.aidRoomPatrollers_3, data.aidRoomPatrollers_4, data.aidRoomPatrollers_5, data.arrive, data.arrivalOther, data.leave, data.dest, data.destOther],
                 function(err) {
                     if (err) {
                         return console.log(err.message);
