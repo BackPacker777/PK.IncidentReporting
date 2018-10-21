@@ -308,6 +308,7 @@ export default class SetSessionStorage {
                     sessionStorage.setItem(`w${count}CityStateZip`, document.getElementById(`w${count}City`).value + ", " + document.getElementById(`w${count}State`).value + " " + document.getElementById(`w${count}Zip`).value);
                     sessionStorage.setItem(`w${count}HomePhoneNum`, document.getElementById(`w${count}HomePhoneNum`).value);
                     sessionStorage.setItem(`w${count}CellPhoneNum`, document.getElementById(`w${count}CellPhoneNum`).value);
+                    sessionStorage.setItem(`w${count}Statement`, document.getElementById(`w${count}Statement`).value);
                     count++;
                 } else {
                     break;

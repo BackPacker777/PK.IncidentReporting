@@ -418,6 +418,10 @@ export default class EventHandler {
                     </div>
                     <input name="w${count}City" id="w${count}City" type="none" hidden>
                     <input name="w${count}" id="w${count}State" type="none" hidden>
+                    <br>
+                    <div class="small-12 columns">
+                        <textarea name="w${count}Statement" id="w${count}Statement" rows="1" cols="80" placeholder="Witness Statement" maxlength="400" wrap="hard"></textarea>
+                    </div>
         `;
         let removeClick;
         document.getElementById("addWitness").addEventListener("click", removeClick = () => {

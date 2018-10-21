@@ -492,11 +492,13 @@ class results {
             while (count >= 0) {
                 if (sessionStorage.getItem(`w${count}Name`)) {
                     document.getElementById('witnesses').innerText += (
-                        sessionStorage.getItem(`w${count}Name`)
+                        `Witness ${count + 1}: `
+                        + sessionStorage.getItem(`w${count}Name`)
                         + `,   ` + sessionStorage.getItem(`w${count}Street`)
                         + `,   ` + sessionStorage.getItem(`w${count}CityStateZip`)
                         + `; Home Phone: ` + sessionStorage.getItem(`w${count}HomePhoneNum`)
                         + `, Cell Phone: ` + sessionStorage.getItem(`w${count}CellPhoneNum`)
+                        + `\nWitness ${count + 1} Statement: ` + sessionStorage.getItem(`w${count}Statement`)
                         + (`\n`)
                     );
                     count++;

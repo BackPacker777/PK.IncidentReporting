@@ -99,6 +99,7 @@ class DataHandler {
                 city_state_zip TEXT,
                 home_phone TEXT,
                 cell_phone TEXT,
+                statement TEXT,
                 FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_siteData (
@@ -328,10 +329,10 @@ class DataHandler {
             while (counter >= 0) {
                 let wName = `data.w${counter}Name`;
                 if (eval(wName)) {
-                    let wStreet = `data.w${counter}Street`, wCityStateZip = `data.w${counter}CityStateZip`, wHomePhone = `data.w${counter}HomePhoneNum`, wCellPhone = `data.w${counter}CellPhoneNum`;
-                    this.db.run(`INSERT INTO pk_witnesses (witness_id, patient_id, name, street, city_state_zip, home_phone, cell_phone)
-                        VALUES(?, ?, ?, ?, ?, ?, ?)`,
-                        [data.witness_id, patient_id, eval(wName), eval(wStreet), eval(wCityStateZip), eval(wHomePhone), eval(wCellPhone)],
+                    let wStreet = `data.w${counter}Street`, wCityStateZip = `data.w${counter}CityStateZip`, wHomePhone = `data.w${counter}HomePhoneNum`, wCellPhone = `data.w${counter}CellPhoneNum`, wStatement = `data.w${counter}Statement`;
+                    this.db.run(`INSERT INTO pk_witnesses (witness_id, patient_id, name, street, city_state_zip, home_phone, cell_phone, statement)
+                        VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [data.witness_id, patient_id, eval(wName), eval(wStreet), eval(wCityStateZip), eval(wHomePhone), eval(wCellPhone), eval(wStatement)],
                         function(err) {
                             if (err) {
                                 return console.log(err.message);
