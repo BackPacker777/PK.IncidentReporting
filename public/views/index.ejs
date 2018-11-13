@@ -1,71 +1,20 @@
 <% include public/views/header.ejs %>
-<% include public/views/no_print.ejs %>
 
-<div class="row" id="topMast">
-	<div class="small-6 columns">
-		<h2>PK Incident Reporting - 2019</h2>
-	</div>
-    <div class="small-2 columns text-center small-vertical-middle"><span class="button large expanded" id="archivesButton">Archives</span></div>
-	<div class="small-2 columns text-right medium-vertical-middle"><h5>INCIDENT #:</h5></div>
-    <div class="small-1 columns text-left medium-vertical-middle"><h5 id="incidentNumber">0</h5></div>
-	<div class="small-1 columns center">
-		<img src="public/images/NSP_Logo.png" alt="NSP Logo" id="nspLogo" width="80" height="100">
-	</div>
-</div>
-<div class="panel radius">
-	<form id="mainForm" action="javascript:0">
-		<div class="row" id="topStuff">
-			<fieldset id="dateTime">
-            <legend>Date &amp; Time</legend>
-                <div class="row">
-                    <div class="small-4 columns">
-                        <span class="label">Day</span><br>
-                        <input name="day" id="day" type="text" required>
-                    </div>
-                    <div class="small-4 columns">
-                        <span class="label">Date</span><br>
-                        <input name="date" id="date" type="text" required>
-                    </div>
-                    <div class="small-4 columns end">
-                        <span class="label">Incident Time</span><br>
-                        <input name="incidentTime" id="incidentTime" type="time" autofocus required>
-                    </div>
-                </div>
-			</fieldset>
-		</div>
-
-			<% include public/views/personal_info.ejs %>
-
-			<% include public/views/patient_history.ejs %>
-
-			<% include public/views/locations_history.ejs %>
-
-			<% include public/views/equipment.ejs %>
-
-			<% include public/views/incidentDesc_conditions.ejs %>
-
-			<% include public/views/injury_data.ejs %>
-
-			<% include public/views/firstAid_patrollers_transDest.ejs %>
-
-			<% include public/views/witness_completer.ejs %>
-
-			<div class="row" id="bottomStuff">
-				<fieldset id="buttons">
-					<div class="row">
-						<div class="small-3 columns">
-							<input type='submit' id='submit' value='Completed!' class="button large">
-							<!--<span class="button large" id="submit">Completed!</span>-->
-						</div>
-						<div class="small-3 columns float-right">
-							<input type="reset" class="button large alert float-right" id="reset" value="Reset Form">
-						</div>
-					</div>
-				</fieldset>
-			</div>
-	</form>
-
-	<% include public/views/archives.ejs %>
-</div>
+    <div class="row">
+        <div class="large-4 columns">&nbsp;</div>
+        <div class="large-4 columns float-center">
+            <br><br><span class="label expanded"><strong>Password</strong></span>
+            <input class="large-expanded" type="password" id="password" name="password" placeholder="Enter password to continue">
+        </div>
+        <div class="large-4 columns">&nbsp;</div>
+    </div>
+<br><br>
+    <div class="row">
+        <div class="large-12 columns">
+            <a href="http://pksp.org" target="_blank"><img src="public/images/tl_ab.png" alt="PKSP" width="768" height="343" class="float-center"></a>
+        </div>
+    </div>
+<!-- SCRIPTS -->
+<script type="module" src="public/javascripts/password.js"></script>
 
 <% include public/views/footer.ejs %>

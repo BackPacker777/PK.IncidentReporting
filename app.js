@@ -26,6 +26,12 @@ class app {
                 } else if (contentType.indexOf('css') >= 0 || contentType.indexOf('js') >= 0) {
                     response.writeHead(200, {'Content-Type': contentType});
                     response.end(string, 'utf-8');
+				} else if (contentType.indexOf('html') >= 0 && request.url.indexOf('/main.ejs')) {
+                    response.writeHead(200, {'Content-Type': contentType});
+                    response.end(EJS.render(string, {
+                        data: this.ejsData,
+                        filename: 'main.ejs'
+                    }));
                 } else if (contentType.indexOf('html') >= 0) {
                     response.writeHead(200, {'Content-Type': contentType});
                     response.end(EJS.render(string, {
@@ -39,7 +45,23 @@ class app {
             };
 
             if (request.method === 'POST') {
-                if (request.headers['x-requested-with'] === 'XHR00') {
+				this.allowMain = false;
+				if (request.headers['x-requested-with'] === 'fetch.9') {
+					let password = ``;
+                    request.on('data', (data) => {
+                        password += data.toString();
+                    });
+                    request.on('end', () => {
+                        password = JSON.stringify(password);
+                        DATA_HANDLER.checkPassword(password, (result) => {
+                            if (result === `1`) {
+                                this.allowMain = true;
+                            }
+                            response.writeHead(200, {'content-type': 'text/plain'});
+                            response.end(result);
+                        });
+                    });
+				} else if (request.headers['x-requested-with'] === 'XHR00') {
                     this.data_handler.getRowCount((count) => {
                         count = count.toString();
                         response.writeHead(200, {'content-type': 'text/plain'});
@@ -143,6 +165,9 @@ class app {
                 DATA_HANDLER.renderDom('public/views/skiRental.html', 'text/html', httpHandler, 'utf-8');
             } else if (request.url.indexOf('helmetRental.html') >= 0) {
                 DATA_HANDLER.renderDom('public/views/helmetRental.html', 'text/html', httpHandler, 'utf-8');
+			} else if (request.url.indexOf('/main.ejs') >= 0 && this.allowMain) {
+				DATA_HANDLER.renderDom('public/views/main.ejs', 'text/html', httpHandler, 'utf-8');
+				this.allowMain = false;
             } else if (request.url.indexOf('/') >= 0) {
                 DATA_HANDLER.renderDom('public/views/index.ejs', 'text/html', httpHandler, 'utf-8');
             } else {

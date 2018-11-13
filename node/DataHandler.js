@@ -11,6 +11,16 @@ class DataHandler {
         this.counter = null;
     }
 
+    static checkPassword(password, callback) {
+        const PASSWORD = `pksp2019`;
+        password =  password.replace(/['"]+/g, '');
+        if (password === PASSWORD) {
+            callback(`1`);
+        } else {
+            callback(`0`);
+        }
+    }
+
     initDB() {
         this.db = new SQL.Database(`data/incident_data.db`, (err) => {
             this.db.run(`PRAGMA foreign_keys = on`);
