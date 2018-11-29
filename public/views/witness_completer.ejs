@@ -13,10 +13,14 @@
 	<fieldset id="completer">
 		<legend>Report Completion</legend>
         <div class="row">
-            <div class="small-4 columns" id="reportCompleter">
+            <div class="small-3 columns" id="reportCompleter">
                 <span class="label">Report Completer</span><br>
             </div>
-            <div class="small-3 columns end">
+			<div class="small-7 columns" id="reportCompleterSig">
+				<canvas id="sigCanvas" width="400" height="80" style="background-color: #cacaca"></canvas>
+				<p>Sign Above</p> <p id="sigSave">SAVE</p> <p id="sigClear">CLEAR</p>
+			</div>
+            <div class="small-2 columns end">
                 <span class="label">Date Completed:</span><br>
                 <input name="dateComplete" id="dateComplete" type="text">
             </div>

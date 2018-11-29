@@ -1,20 +1,20 @@
-//   @todo
-
 'use strict';
+
 import EventHandler from './EventHandler.js';
+import ControlSignatures from './ControlSignatures.js';
 
 class main {
     constructor() {
-        let date = new Date();
-        this.date = date;
+        this.date = new Date();
         this.month = this.date.getMonth() + 1;
         this.day = this.date.getDate();
         this.year = this.date.getFullYear();
         this.weekday = this.date.getDay();
         this.fullDate = `${this.month}/${this.day}/${this.year}`;
         this.populateDate();
-        this.eventHandler = new EventHandler(this.year, this.month, this.day);
+        new EventHandler(this.year, this.month, this.day);
         this.prepApp();
+        new ControlSignatures();
     }
 
     prepApp() {
