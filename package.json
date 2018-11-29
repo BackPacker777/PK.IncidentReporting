@@ -1,6 +1,6 @@
 {
   "name": "pk.incident.reporting",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "For generating Ski Patrol incident forms",
   "main": "bin/server",
   "scripts": {
@@ -9,12 +9,23 @@
   "author": "Howard Bates",
   "license": "MIT",
   "engines": {
-    "node": ">= 11.1.0"
+    "node": ">= 11.2.0"
   },
   "dependencies": {
     "body-parser": "latest",
     "ejs": "latest",
     "formidable": "latest",
-    "sqlite3": "^4.0.2"
-  }
+    "signature_pad": "latest",
+    "sqlite3": "latest"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BackPacker777/PK.IncidentReporting.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/BackPacker777/PK.IncidentReporting/issues"
+  },
+  "homepage": "https://github.com/BackPacker777/PK.IncidentReporting#readme"
 }
