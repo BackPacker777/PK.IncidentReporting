@@ -102,3 +102,16 @@ input {
 .ul {
   text-decoration: underline;
 }
+
+#sig {
+  position: absolute;
+  bottom: 14px;
+  left: 60px;
+  width: 260px;
+  height: 40px;
+  z-index: 2;
+  background-image: url("/public/images/signature.png");
+  background-size: contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}

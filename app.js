@@ -47,7 +47,7 @@ class app {
             if (request.method === 'POST') {
 				this.allowMain = false;
 				if (request.headers['x-requested-with'] === 'fetch.9') {
-					let password = ``;
+                    let password = ``;
                     request.on('data', (data) => {
                         password += data.toString();
                     });
@@ -59,6 +59,18 @@ class app {
                             }
                             response.writeHead(200, {'content-type': 'text/plain'});
                             response.end(result);
+                        });
+                    });
+                } else if (request.headers['x-requested-with'] === 'fetch.10') {
+				    let base64data = '';
+                    request.on('data', chunk => {
+                        base64data += chunk.toString();
+                    });
+                    request.on('end', () => {
+                        base64data = base64data.replace(/^data:image\/png;base64,/, "");
+                        DATA_HANDLER.saveSignature(base64data, () => {
+                            response.writeHead(200, {'content-type': 'text/plain'});
+                            response.end(`saved`);
                         });
                     });
 				} else if (request.headers['x-requested-with'] === 'XHR00') {

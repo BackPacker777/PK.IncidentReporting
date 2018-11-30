@@ -19,6 +19,13 @@ class DataHandler {
         }
     }
 
+    static saveSignature(sig, callback) {
+        FS.writeFile(`public/images/signature.png`, sig, 'base64', err => {
+            if (err) throw err;
+            callback('saved');
+        });
+    }
+
     initDB() {
         this.db = new SQL.Database(`data/incident_data.db`, (err) => {
             this.db.run(`PRAGMA foreign_keys = on`);
