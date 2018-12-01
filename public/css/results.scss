@@ -103,14 +103,37 @@ input {
   text-decoration: underline;
 }
 
-#sig {
+#sigParent {
   position: absolute;
-  bottom: 5px;
-  left: 40px;
+  bottom: 10px;
+  left: 160px;
+  width: 220px;
+  height: 40px;
+  z-index: 2;
+  background-size: contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#sigInjured {
+  position: absolute;
+  bottom: 10px;
+  left: 60px;
   width: 260px;
   height: 40px;
   z-index: 2;
-  background-image: url("/public/images/signature.png");
+  background-size: contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#sigRefuse {
+  position: absolute;
+  bottom: -8px;
+  left: 280px;
+  width: 260px;
+  height: 40px;
+  z-index: 2;
   background-size: contain;
   background-repeat:no-repeat;
   background-position:center;

@@ -486,7 +486,7 @@ class results {
             }
         }
 
-    //WITNESSES-------------------------------------------------------------------------------------------------------------
+    //WITNESSES---------------------------------------------------------------------------------------------------------
         if (sessionStorage.getItem('w0Name')) {
             let count = 0;
             while (count >= 0) {
@@ -510,9 +510,19 @@ class results {
             document.getElementById('noWitness').checked = true;
         }
 
-    //REPORT COMPLETER------------------------------------------------------------------------------------------------------
+    //REPORT COMPLETER--------------------------------------------------------------------------------------------------
         document.getElementById('reportCompleter').innerText = sessionStorage.getItem('reportCompleter');
         document.getElementById('dateComplete').innerText = sessionStorage.getItem('dateComplete');
+
+    //SIGNATURE---------------------------------------------------------------------------------------------------------
+        let sigLocation;
+        console.log(sessionStorage.getItem('sigLocation'));
+        if (sessionStorage.getItem('sigLocation')) {
+            sigLocation = sessionStorage.getItem('sigLocation');
+        } else {
+            sigLocation = 'sigInjured';
+        }
+        document.getElementById(sigLocation).style.backgroundImage = 'url("/public/images/signature.png")';
 }
 
 //For later when desiring to get results from DB (needs work)

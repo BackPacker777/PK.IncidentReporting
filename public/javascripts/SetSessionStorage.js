@@ -272,7 +272,7 @@ export default class SetSessionStorage {
             }
         }
 
-        //TRANSPORTATION & DESTINATION-------------------------------------------------------------------------------------
+        //TRANSPORTATION & DESTINATION----------------------------------------------------------------------------------
         let howArrive = document.getElementsByName('arrival');
         for (let i = 0; i < howArrive.length; i++) {
             if (howArrive[i].checked) {
@@ -298,7 +298,7 @@ export default class SetSessionStorage {
             }
         }
 
-        //WITNESSESS
+        //WITNESSESS----------------------------------------------------------------------------------------------------
         if (document.getElementById('w0LastName')) {
             let count = 0;
             while (count >= 0) {
@@ -316,9 +316,13 @@ export default class SetSessionStorage {
             }
         }
 
-        //REPORT COMPLETER-------------------------------------------------------------------------------------------------
+        //REPORT COMPLETER----------------------------------------------------------------------------------------------
         sessionStorage.setItem('reportCompleter', document.getElementById('reportCompleter_0').value);
         sessionStorage.setItem('dateComplete', document.getElementById('dateComplete').value);
+
+        //SIGNATURE-----------------------------------------------------------------------------------------------------
+        sessionStorage.setItem('finalSig', document.getElementById('finalSig').value);
+        sessionStorage.setItem('sigLocation', document.getElementById("sigLocation").options[document.getElementById("sigLocation").selectedIndex].value);
 
         SetSessionStorage.passData();
 

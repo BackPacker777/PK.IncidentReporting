@@ -104,6 +104,8 @@ class DataHandler {
                 witnessData TEXT,
                 reportCompleter TEXT,
                 dateComplete TEXT,
+                finalSig TEXT,
+                sigLocation TEXT,
                 FOREIGN KEY (patient_id) REFERENCES pk_patients (patient_id) ON DELETE CASCADE ON UPDATE CASCADE
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_witnesses (
@@ -322,9 +324,9 @@ class DataHandler {
                     }
                 }
             );
-            this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, witnessData, reportCompleter, dateComplete)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [data.incident_id, patient_id, data.day, data.date, data.inLesson, data.timesWhere, data.numTimesToday, data.numTimesPrior, data.incidentTime, data.video, data.videoName, data.incidentDescription, data.statementTaker, data.witnessData, data.reportCompleter, data.dateComplete],
+            this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, witnessData, reportCompleter, dateComplete, finalSig, sigLocation)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [data.incident_id, patient_id, data.day, data.date, data.inLesson, data.timesWhere, data.numTimesToday, data.numTimesPrior, data.incidentTime, data.video, data.videoName, data.incidentDescription, data.statementTaker, data.witnessData, data.reportCompleter, data.dateComplete, data.finalSig, data.sigLocation],
                 function(err) {
                     if (err) {
                         return console.log(err.message);

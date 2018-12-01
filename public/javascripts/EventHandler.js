@@ -82,12 +82,18 @@ export default class EventHandler {
     }
 
     handleArchivesButton() {
+        const PASS = 'skinubs';
         document.getElementById("archivesButton").addEventListener("click", () => {
-            this.setDisplay('archives', 1);
-            document.getElementById("searchDate").style.display = 'none';
-            document.getElementById("searchLastName").style.display = 'none';
-            document.getElementById("searchIncidentID").style.display = 'none';
-            this.handleArchiveSearching();
+            let password = prompt(`PASSWORD:`);
+            if (password === PASS) {
+                this.setDisplay('archives', 1);
+                document.getElementById("searchDate").style.display = 'none';
+                document.getElementById("searchLastName").style.display = 'none';
+                document.getElementById("searchIncidentID").style.display = 'none';
+                this.handleArchiveSearching();
+            } else {
+                alert(`Invalid password!`);
+            }
         });
     }
 

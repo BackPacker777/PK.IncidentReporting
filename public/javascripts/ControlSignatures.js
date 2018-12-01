@@ -4,13 +4,14 @@ export default class ControlSignatures {
     constructor() {
         let canvas = document.querySelector('#sigCanvas');
         this.signature = new SignaturePad(canvas);
-        this.handleSigSave()
+        this.handleSigSave();
         this.handleSigClear();
     }
 
     handleSigSave() {
         document.getElementById('sigSave').addEventListener(`click`, () => {
             let sig = this.signature.toDataURL('image/png');
+            document.getElementById('finalSig').value = sig;
             this.performFetch(sig);
             //https://stackoverflow.com/questions/52383511/writing-a-png-thats-generated-from-canvas-using-todataurl-then-sent-via-xmlhttp
         });

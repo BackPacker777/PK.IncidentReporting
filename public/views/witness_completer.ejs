@@ -13,17 +13,26 @@
 	<fieldset id="completer">
 		<legend>Report Completion</legend>
         <div class="row">
-            <div class="small-4 columns" id="reportCompleter">
+            <div class="small-3 columns" id="reportCompleter">
                 <span class="label">Report Completer</span><br>
             </div>
-			<div class="small-4 columns" id="reportCompleterSig">
+			<div class="small-4 columns" id="patientSig">
 				<canvas id="sigCanvas" width="400" height="80" style="background-color: #cacaca"></canvas>
 				<p>Sign Above</p>
 			</div>
 			<div class="small-1 columns glow">
 				<p id="sigSave"><strong>SAVE</strong></p><p id="sigClear"><strong>CLEAR</strong></p>
 			</div>
-            <div class="small-3 columns end">
+			<div class="small-2 columns" id="sigLocationDiv">
+				<label for="sigLocation" class="label">Signature</label>
+				<select name="sigLocation" id="sigLocation">
+					<option value="sigParent">Parent/Guardian</option>
+					<option value="sigInjured">Injured Patient</option>
+					<option value="sigRefuse">Refuse Treatment</option>
+				</select>
+				<input type="hidden" id="finalSig">
+			</div>
+            <div class="small-2 columns end">
                 <label class="label" for="dateComplete">Date Completed:</label><br>
                 <input name="dateComplete" id="dateComplete" type="text">
             </div>
