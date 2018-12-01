@@ -1,10 +1,10 @@
 {
   "name": "pk.incident.reporting",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "For generating Ski Patrol incident forms",
-  "main": "bin/server",
+  "main": "bin/pk_server",
   "scripts": {
-    "start": "node bin/server"
+    "start": "node bin/pk_server"
   },
   "author": "Howard Bates",
   "license": "MIT",

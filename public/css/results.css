@@ -433,4 +433,14 @@ input {
 .ul {
   text-decoration: underline; }
 
-/*# sourceMappingURL=results.css.map */
+#sig {
+  position: absolute;
+  bottom: 5px;
+  left: 40px;
+  width: 260px;
+  height: 40px;
+  z-index: 2;
+  background-image: url("/public/images/signature.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; }

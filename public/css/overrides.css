@@ -17,25 +17,28 @@
   transition: all 0.3s ease-in;
   box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.67); }
 
+.glow p:hover {
+  border-radius: 6px;
+  transition: all 0.3s ease-in;
+  box-shadow: 0 0 10px 0 rgba(23, 121, 186, 0.67);
+  cursor: pointer; }
+
 @media print {
   form {
     display: none !important; }
-
   #topMast {
     display: none !important; }
-
   #noPrint {
     display: block !important; }
-
   #noPrint h1 {
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important; }
-
   #warnPic {
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important; } }
+
 /*
 @media print {
 	body {
@@ -420,5 +423,3 @@
 .height-41 {
   height: 250px;
   min-height: 250px; }
-
-/*# sourceMappingURL=overrides.css.map */
