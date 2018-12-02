@@ -1,18 +1,16 @@
-//   @todo Witness stuff
-
 "use strict";
 import SetSessionStorage from './SetSessionStorage.js';
+import ProcessArchives from './ProcessArchives.js';
 
 export default class EventHandler {
     constructor(year, day, month) {
+        new ProcessArchives();
         this.loadIncidentNumber();
         this.loadZipData();
         this.loadHills();
         this.loadLifts();
         this.calculateAge(year, month, day);
         this.handlePatientZip();
-        this.handleArchivesButton();
-        this.handleReturnButton();
         this.handleLocation();
         this.handleLesson();
         this.handleNumOther();
@@ -79,98 +77,6 @@ export default class EventHandler {
                 }
             }
         });
-    }
-
-    handleArchivesButton() {
-        const PASS = 'skinubs';
-        document.getElementById("archivesButton").addEventListener("click", () => {
-            let password = prompt(`PASSWORD:`);
-            if (password === PASS) {
-                this.setDisplay('archives', 1);
-                document.getElementById("searchDate").style.display = 'none';
-                document.getElementById("searchLastName").style.display = 'none';
-                document.getElementById("searchIncidentID").style.display = 'none';
-                this.handleArchiveSearching();
-            } else {
-                alert(`Invalid password!`);
-            }
-        });
-    }
-
-    handleArchiveSearching() {
-        let search = document.forms[0].elements["searchCriteria"];
-        for (let i = 0; i < search.length; i++) {
-            search[i].addEventListener("click", () => {
-                if (search[i].value === "date") {
-                    document.getElementById("searchDate").style.display = 'block';
-                    document.getElementById("searchLastName").style.display = 'none';
-                    document.getElementById("searchIncidentID").style.display = 'none';
-                    document.getElementById("searchDateInput").addEventListener("blur", () => {
-                        let search = ['date', document.getElementById("searchDateInput").value];
-                        this.performFetch(search);
-                    });
-                } else if (search[i].value === "lastName") {
-                    document.getElementById("searchLastName").style.display = 'block';
-                    document.getElementById("searchDate").style.display = 'none';
-                    document.getElementById("searchIncidentID").style.display = 'none';
-                    document.getElementById("searchLastNameInput").addEventListener("blur", () => {
-                        let search = ['lastName', document.getElementById("searchLastNameInput").value];
-                        this.performFetch(search);
-                    });
-                } else {
-                    document.getElementById("searchIncidentID").style.display = 'block';
-                    document.getElementById("searchLastName").style.display = 'none';
-                    document.getElementById("searchDate").style.display = 'none';
-                    document.getElementById("searchIncidentIDInput").addEventListener("blur", () => {
-                        let search = ['incidentID', document.getElementById("searchIncidentIDInput").value];
-                        this.performFetch(search);
-                    });
-                }
-            });
-        }
-    }
-
-    displaySearchResults(data) {
-        if (data.length > 0) {
-            data = JSON.parse(data);
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < data[i].length; j++) {
-                    // console.log(data[i][j]);
-                    document.getElementById(`incidentData`).innerText += `<br>Last Name: ${data[i][j].lastName},  First Name: ${data[i][j].firstName}, Date: ${data[i][j].date}, Incident Description ${data[i][j].incidentDescription}\n`;
-                }
-            }
-        } else {
-            document.getElementById('incidentData').innerHTML = `<br><br><h1>Incident not found.</h1>`;
-        }
-    }
-
-    handleReturnButton() {
-        document.getElementById("returnButton").addEventListener("click", () => {
-            this.setDisplay('archives', 0);
-        });
-    }
-
-    setDisplay(whichDiv, visibility) {
-        let divs = ['topMast','topStuff','personalInfo','patientHistory','locations','lifts','hills','history'
-            ,'equipment','incidentDesc','conditions','injury','injuryZone','firstAid','patrollers','transportDestination'
-            ,'witness','completers','bottomStuff','archives'];
-        for (let i = 0; i < divs.length; i++) {
-            if (visibility === 0) {
-                if (divs[i] !== whichDiv) {
-                    document.getElementById(divs[i]).style.display = 'block';
-                }
-                else {
-                    document.getElementById(divs[i]).style.display = 'none';
-                }
-            } else {
-                if (divs[i] !== whichDiv) {
-                    document.getElementById(divs[i]).style.display = 'none';
-                }
-                else {
-                    document.getElementById(divs[i]).style.display = 'block';
-                }
-            }
-        }
     }
 
     handleLocation() {
@@ -475,23 +381,6 @@ export default class EventHandler {
     handleReset() {
         document.getElementById("reset").addEventListener("click", () => {
             window.location.reload();
-        });
-    }
-
-    performFetch(criteria) {
-        fetch(document.url, {
-            method: 'POST',
-            body: criteria,
-            headers: {
-                'x-requested-with': 'fetch.1',
-                'mode': 'no-cors'
-            }
-        }).then((response) => {
-            return response.text();
-        }).then((data) => {
-            this.displaySearchResults(data);
-        }).catch((error) => {
-            console.log(error);
         });
     }
 

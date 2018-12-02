@@ -251,14 +251,18 @@ class DataHandler {
         if (search[0] === 'date') {
             let dateArray = search[1].split('-');
             dateArray[1] = parseInt(dateArray[1], 10);
+            if (Number(dateArray[2]) < 10) {
+                dateArray[2] = dateArray[2].charAt(1);
+            }
             let date = (dateArray[1] + '/' + dateArray[2] + '/' + dateArray[0]);
+            console.log(date);
             let sql = `SELECT * FROM pk_incidents LEFT JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id WHERE pk_incidents.date = ?`;
             this.db.all(sql, [date], (err, rows) => {
                 if (err) {
                     console.log(`DATE ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    console.log(data);
+                    // console.log(data);
                     callback(data);
                 }
             });
@@ -269,7 +273,7 @@ class DataHandler {
                     console.log(`NAME ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    console.log(data);
+                    // console.log(data);
                     callback(data);
                 }
             });
@@ -280,7 +284,7 @@ class DataHandler {
                     console.log(`ID ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    console.log(data);
+                    // console.log(data);
                     callback(data);
                 }
             });

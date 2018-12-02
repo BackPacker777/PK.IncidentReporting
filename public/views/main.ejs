@@ -13,7 +13,7 @@
 	</div>
 </div>
 <div class="panel radius">
-	<form id="mainForm" action="javascript:0">
+	<form id="mainForm" name='mainForm' action="javascript:0">
 		<div class="row" id="topStuff">
 			<fieldset id="dateTime">
             <legend>Date &amp; Time</legend>
@@ -63,9 +63,9 @@
 					</div>
 				</fieldset>
 			</div>
-	</form>
 
-	<% include public/views/archives.ejs %>
+        <% include public/views/archives.ejs %>
+	</form>
 	<!-- SCRIPTS -->
 	<!--<script type="module" src="public/javascripts/signature_pad.umd.js"></script>-->
 	<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>

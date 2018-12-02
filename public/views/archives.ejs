@@ -7,18 +7,22 @@
             <h4>Search Criteria:</h4>
         </div>
         <div class="small-5 columns small-vertical-middle">
-            <input type="radio" name="searchCriteria" value="date" required><label for="searchDate"><strong>Incident Date</strong></label>
-            <input type="radio" name="searchCriteria" value="lastName" required><label for="searchLastName"><strong>Patient Last Name</strong></label>
-            <input type="radio" name="searchCriteria" value="incidentID" required><label for="searchIncidentID"><strong>Incident ID</strong></label>
+            <input type="radio" name="searchCriteria" value="date" id="searchDate" required><label for="searchDate"><strong>Incident Date</strong></label>
+            <input type="radio" name="searchCriteria" value="lastName" id="searchLastName" required><label for="searchLastName"><strong>Patient Last Name</strong></label>
+            <input type="radio" name="searchCriteria" value="incidentID" id="searchIncidentID" required><label for="searchIncidentID"><strong>Incident ID</strong></label>
         </div>
-        <div class="small-4 columns" id="searchDate">
+        <div class="small-3 columns" id="searchDateDiv">
             <input type="date" id="searchDateInput" name="searchDateInput" placeholder="Date">
+            <input type="hidden" id="actualDate">
         </div>
-        <div class="small-4 columns" id="searchLastName">
+        <div class="small-3 columns" id="searchLastNameDiv">
             <input type="text" id="searchLastNameInput" name="searchLastNameInput" placeholder="Last Name">
         </div>
-        <div class="small-4 columns" id="searchIncidentID">
+        <div class="small-3 columns" id="searchIncidentIDDiv">
             <input type="number" id="searchIncidentIDInput" name="searchIncidentIDInput" placeholder="Incident Number" maxlength="4">
+        </div>
+        <div class="small-1 columns" id="searchButtonDiv">
+            <span class="button" id="searchButton">Search</span>
         </div>
     </div>
     <div class="row">
