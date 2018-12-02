@@ -259,7 +259,6 @@ class DataHandler {
             }
             let date = (dateArray[1] + '/' + dateArray[2] + '/' + dateArray[0]);
             let sql = `SELECT * FROM pk_incidents LEFT JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id WHERE pk_incidents.date = ?`;
-            console.log(sql);
             this.db.all(sql, [date], (err, rows) => {
                 if (err) {
                     console.log(`DATE ERR = ${err}`);

@@ -1,9 +1,12 @@
 "use strict";
 
+import SetResultsLocalStorage from './SetResultsLocalStorage.js';
+
 export default class ProcessArchives {
     constructor() {
         this.handleArchivesButton();
         this.handleReturnButton();
+        document.getElementById("selectedArchives").style.display = 'none';
     }
 
     handleArchivesButton() {
@@ -53,14 +56,16 @@ export default class ProcessArchives {
     }
 
     displaySearchResults(data) {
+        data = JSON.parse(data);
         if (data.length > 0) {
-            data = JSON.parse(data);
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
                     // console.log(data[i][j]);
-                    document.getElementById(`incidentData`).innerHTML = `<p><br><strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription}</p>\n`;
+                    document.getElementById(`incidentData`).innerHTML += `<br><input type="checkbox" name="archiveIncident" value="${data[i][j].incident_id}"> &nbsp;&nbsp; <strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription}`;
                 }
             }
+            document.getElementById("selectedArchives").style.display = 'block';
+            this.handleSelectedArchivesButton(data);
         } else {
             document.getElementById('incidentData').innerHTML = `<br><br><h1>Incident not found.</h1>`;
         }
@@ -111,6 +116,21 @@ export default class ProcessArchives {
         }
     }
 
+    handleSelectedArchivesButton(data) {
+        let incidentBoxes = [];
+        let archiveIncidents = document.getElementsByName('archiveIncident');
+        document.getElementById("selectedArchives").addEventListener("click", () => {
+            for (let i = 0; i < archiveIncidents.length; i++) {
+                if (archiveIncidents[i].checked) {
+                    incidentBoxes.push(archiveIncidents[i].value);
+                }
+            }
+            for (let i = 0; i < incidentBoxes.length; i++) {
+                new SetResultsLocalStorage(incidentBoxes[i], data);
+            }
+        });
+    }
+
     performFetch(criteria) {
         fetch(document.url, {
             method: 'POST',
@@ -129,6 +149,3 @@ export default class ProcessArchives {
     }
 
 }
-
-
-

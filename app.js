@@ -157,7 +157,6 @@ class app {
                     request.on('end', () => {
                         this.data_handler.queryData(criteria, (data) => {
                             data = JSON.stringify(data);
-                            console.log(`appdata = ${data}`);
                             response.writeHead(200, {'content-type': 'application/json'});
                             response.end(data);
                         });

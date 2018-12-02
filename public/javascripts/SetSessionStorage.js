@@ -1,5 +1,3 @@
-//   @todo Fix lines 222-235
-
 "use strict";
 
 export default class SetSessionStorage {

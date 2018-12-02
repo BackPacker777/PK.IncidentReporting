@@ -1,5 +1,3 @@
-//   @todo
-
 'use strict';
 
 class results {
@@ -516,45 +514,13 @@ class results {
 
     //SIGNATURE---------------------------------------------------------------------------------------------------------
         let sigLocation;
-        console.log(sessionStorage.getItem('sigLocation'));
         if (sessionStorage.getItem('sigLocation')) {
             sigLocation = sessionStorage.getItem('sigLocation');
         } else {
             sigLocation = 'sigInjured';
         }
         document.getElementById(sigLocation).style.backgroundImage = 'url("/public/images/signature.png")';
-}
-
-//For later when desiring to get results from DB (needs work)
-/*
-    populateResults() {
-        this.performAjax('XHR6', 0, (response) => {
-            let tempList = JSON.parse(response);
-            let last = tempList.length - 1;
-            console.log(tempList[last]._id);
-            document.getElementById('day').innerText += tempList[last].day;
-            document.getElementById('date').innerText += tempList[last].date;
-            document.getElementById('lastName').innerText += tempList[last].lastName;
-
-            /!*for (let i = 0; i < Object.keys(tempList[last]).length; i++) {
-                document.getElementById('day').innerText += tempList[last].day;
-            }*!/
-        });
     }
-
-    performAjax(requestNum, sendToNode, callback) {
-        let bustCache = "?" + new Date().getTime();
-        const XHR = new XMLHttpRequest();
-        XHR.open("POST", document.url + bustCache, true);
-        XHR.setRequestHeader("X-Requested-with", requestNum);
-        XHR.send(sendToNode);
-        XHR.onload = () => {
-            if (XHR.readyState ==== 4 && XHR.status ==== 200 && callback) {
-                return callback(XHR.responseText);
-            }
-        };
-    }
-*/
 }
 
 window.addEventListener('load', () => {

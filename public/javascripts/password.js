@@ -14,9 +14,6 @@ class password {
                     if (result === `1`) {
                         let host = window.location.host;
                         window.open(`http://${host}/main.ejs`, '_self', 'status=yes');
-                        // window.open('http://pk-incidents.herokuapp.com/main.ejs', '_self', 'status=yes');
-                        // window.open('http://codedelegance.com:8558/main.ejs', '_self', 'status=yes');
-                        // window.open('http://127.0.0.1:8558/main.ejs', '_self', 'status=yes');
                     } else {
                         document.getElementById("password").value = ``;
                         alert(`INCORRECT Password!`);
