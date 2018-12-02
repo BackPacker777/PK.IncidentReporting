@@ -7,7 +7,7 @@ export default class ProcessArchives {
     }
 
     handleArchivesButton() {
-        const PASS = 'skinubs';
+        const PASS = '7778';
         document.getElementById("archivesButton").addEventListener("click", () => {
             let password = prompt(`PASSWORD:`);
             if (password === PASS) {
@@ -31,14 +31,6 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
                     document.getElementById("searchDateInput").addEventListener('blur', () => {
-                        let date = [];
-                        date = document.getElementById("searchDateInput").value.split(/-/);
-                        if (Number(date[2]) < 10) {
-                            let index = 1;
-                            date[2] = date[2].charAt(index);
-                        }
-                        let finalDate = `${date[1]}/${date[2]}/${date[0]}`;
-                        document.getElementById('actualDate').value = finalDate;
                         this.handleSearchButton('date');
                     });
                 } else if (search[i].value === "lastName") {
