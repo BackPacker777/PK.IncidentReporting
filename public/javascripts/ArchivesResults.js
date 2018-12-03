@@ -3,7 +3,6 @@
 class ArchivesResults {
     constructor() {
         ArchivesResults.populateResults();
-        console.log(`localStorage = ${localStorage.getItem('day')}`);
     }
 
     static populateResults() {
@@ -73,6 +72,8 @@ class ArchivesResults {
             document.getElementById('abilityNA').checked = true;
         }
 
+        console.log(localStorage.getItem('inLesson'));
+        console.log(localStorage.getItem('instructor'));
         if (localStorage.getItem('inLesson') === "Yes") {
             document.getElementById('inLesson').checked = true;
             document.getElementById('instYep').innerText = localStorage.getItem('instructor');
@@ -414,26 +415,25 @@ class ArchivesResults {
 
         //SITE CONDITIONS-------------------------------------------------------------------------------------------------------
         if (localStorage.getItem('sceneSurface')) {
-            console.log(localStorage.getItem('sceneSurface'));
-            if (localStorage.getItem('sceneSurface').match("powder")) {
+            if (localStorage.getItem('sceneSurface').match("powder,")) {
                 document.getElementById('powder').checked = true;
             }
-            if (localStorage.getItem('sceneSurface').match("packedpowder")) {
+            if (localStorage.getItem('sceneSurface').match("packedpowder,")) {
                 document.getElementById('packedPowder').checked = true;
             }
-            if (localStorage.getItem('sceneSurface').match("hardpacked")) {
+            if (localStorage.getItem('sceneSurface').match("hardpacked,")) {
                 document.getElementById('hardPacked').checked = true;
             }
-            if (localStorage.getItem('sceneSurface').match("variable")) {
+            if (localStorage.getItem('sceneSurface').match("variable,")) {
                 document.getElementById('variable').checked = true;
             }
-            if (localStorage.getItem('sceneSurface').match("corn")) {
+            if (localStorage.getItem('sceneSurface').match("corn,")) {
                 document.getElementById('corn').checked = true;
             }
-            if (localStorage.getItem('sceneSurface').match("granular")) {
+            if (localStorage.getItem('sceneSurface').match("granular,")) {
                 document.getElementById('loose').checked = true;
             }
-            if (localStorage.getItem('sceneSurface').match("wet")) {
+            if (localStorage.getItem('sceneSurface').match("wet,")) {
                 document.getElementById('wet').checked = true;
             }
             if (localStorage.getItem('sceneSurface').match("other")) {

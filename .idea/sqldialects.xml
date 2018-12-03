@@ -3,4 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="PROJECT" dialect="SQLite" />
   </component>
+  <component name="SqlResolveMappings">
+    <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@name&quot;:&quot;e04f82bb-27fa-4e43-bd27-32d4bfbdf841&quot;,     &quot;@quoted&quot;:&quot;1&quot;    }   }  } }}" />
+  </component>
 </project>

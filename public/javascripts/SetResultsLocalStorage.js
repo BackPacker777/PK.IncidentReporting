@@ -6,18 +6,12 @@ export default class SetResultsLocalStorage {
             for (let j = 0; j < data[i].length; j++) {
                 if (Number(data[i][j].incident_id) === Number(incident_id)) {
                     console.log(data[i][j]);
+                    localStorage.clear();
                     SetResultsLocalStorage.saveData(data[i][j]);
                     window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
                 }
             }
         }
-    }
-
-    static testSave(data) {
-        //DATE & TIME------------------------------------------------------------------------------------------------------
-        localStorage.setItem('day', data.day);
-        localStorage.setItem('date', data.date);
-        localStorage.setItem('incidentTime', data.incidentTime);
     }
 
     static saveData(data) {
@@ -63,7 +57,7 @@ export default class SetResultsLocalStorage {
 
         //SKIING HISTORY------------------------------------------------------------------------------------------------
         localStorage.setItem('ability', data.ability);
-        localStorage.setItem('inLesson', data.lesson);
+        localStorage.setItem('inLesson', data.inLesson);
         localStorage.setItem('instructor', data.instructor);
         localStorage.setItem('timesWhere', data.timesWhere);
         localStorage.setItem('numTimesToday', data.numTimesToday);
