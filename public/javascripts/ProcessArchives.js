@@ -58,11 +58,10 @@ export default class ProcessArchives {
     displaySearchResults(data) {
         data = JSON.parse(data);
         if (data[0]. length > 0) {
-            console.log(data[0]);
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
                     // console.log(data[i][j]);
-                    document.getElementById(`incidentData`).innerHTML += `<br><input type="checkbox" name="archiveIncident" value="${data[i][j].incident_id}"> &nbsp;&nbsp; <strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription} &nbsp;&nbsp; <strong>Incident Location:</strong> ${data[i][j].incidentLocation}`;
+                    document.getElementById(`incidentData`).innerHTML += `<br><input type="checkbox" name="archiveIncident" value="${data[i][j].incident_id}"> &nbsp;&nbsp; | &nbsp;&nbsp; <strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription} &nbsp;&nbsp; <strong>Incident Location:</strong> ${data[i][j].location}`;
                 }
             }
             document.getElementById("selectedArchivesButton").style.display = 'block';
@@ -141,7 +140,6 @@ export default class ProcessArchives {
                 'mode': 'no-cors'
             }
         }).then((response) => {
-            console.log(response.text);
             return response.text();
         }).then((data) => {
             this.displaySearchResults(data);

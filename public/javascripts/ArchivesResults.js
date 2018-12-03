@@ -72,8 +72,6 @@ class ArchivesResults {
             document.getElementById('abilityNA').checked = true;
         }
 
-        console.log(localStorage.getItem('inLesson'));
-        console.log(localStorage.getItem('instructor'));
         if (localStorage.getItem('inLesson') === "Yes") {
             document.getElementById('inLesson').checked = true;
             document.getElementById('instYep').innerText = localStorage.getItem('instructor');
@@ -126,7 +124,7 @@ class ArchivesResults {
         } else {
             document.getElementById('insuranceNo').checked = true;
         }
-        document.getElementById('meds').innerText = localStorage.getItem('meds');
+        document.getElementById('meds').innerText = localStorage.getItem('medications');
         document.getElementById('ticketType').innerText = localStorage.getItem('ticketType');
         document.getElementById('group').innerText = localStorage.getItem('group');
 
