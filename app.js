@@ -171,6 +171,9 @@ class app {
                 DATA_HANDLER.renderDom(request.url.slice(1), 'application/javascript', httpHandler, 'utf-8');
             } else if (request.url.indexOf('.png') >= 0) {
                 DATA_HANDLER.renderDom(request.url.slice(1), 'image/png', httpHandler, 'binary');
+            } else if (request.url.indexOf('archives_results.html') >= 0) {
+                console.log(`Serving archives`);
+                DATA_HANDLER.renderDom('public/views/archives_results.html', 'text/html', httpHandler, 'utf-8');
             } else if (request.url.indexOf('results.html') >= 0) {
                 DATA_HANDLER.renderDom('public/views/results.html', 'text/html', httpHandler, 'utf-8');
             } else if (request.url.indexOf('skiRental.html') >= 0) {

@@ -11,7 +11,13 @@ export default class SetResultsLocalStorage {
                 }
             }
         }
-        // SetResultsLocalStorage.saveData();
+    }
+
+    static testSave(data) {
+        //DATE & TIME------------------------------------------------------------------------------------------------------
+        localStorage.setItem('day', data.day);
+        localStorage.setItem('date', data.date);
+        localStorage.setItem('incidentTime', data.incidentTime);
     }
 
     static saveData(data) {
@@ -23,11 +29,7 @@ export default class SetResultsLocalStorage {
         //INJURED PERSON---------------------------------------------------------------------------------------------------
         localStorage.setItem('lastName', data.lastName);
         localStorage.setItem('firstName', data.firstName);
-        if (data.genderF.checked) {
-            localStorage.setItem('gender', data.genderF);
-        } else if (data.genderM.checked) {
-            localStorage.setItem('gender', data.genderM);
-        }
+        localStorage.setItem('gender', data.gender);
         localStorage.setItem('dob', data.dob);
         localStorage.setItem('age', data.age);
         localStorage.setItem('height', data.height);
@@ -44,57 +46,77 @@ export default class SetResultsLocalStorage {
         //PATIENT HISTORY--------------------------------------------------------------------------------------------------
         localStorage.setItem('priorInjury', data.priorInjury);
         localStorage.setItem('yearInjured', data.yearInjured);
-        if (data.hiYes.checked) {
-            localStorage.setItem('hi', data.hiYes);
-        } else if (data.hiNo.checked) {
-            localStorage.setItem('hi', data.hiNo);
-        }
+        localStorage.setItem('hi', data.healthInsurance);
         localStorage.setItem('meds', data.meds);
         localStorage.setItem('ticketType', data.ticketType);
         localStorage.setItem('group', data.group);
 
         //LOCATION---------------------------------------------------------------------------------------------------------
-        if (data.locationLift.checked) {
+        localStorage.setItem('location', data.location);
+        localStorage.setItem('locationLift', data.locationLift);
+        localStorage.setItem('whichLift', data.whichLift.options[data.whichLift.selectedIndex].value);
+        localStorage.setItem('locationLift', data.locationLift);
+        localStorage.setItem('whichLift', data.whichLift.options[data.whichLift.selectedIndex].value);
+        localStorage.setItem('locationHill', data.locationHill);
+        localStorage.setItem('whichHill', data.whichHill.options[data.whichHill.selectedIndex].text);
+        localStorage.setItem('difficulty', data.whichHill.options[data.whichHill.selectedIndex].value);
+        localStorage.setItem('location', data.locationPremise);
+
+        /*if (data.location === 'Lift') {
             localStorage.setItem('location', data.locationLift);
             localStorage.setItem('locationLift', data.locationLift);
             localStorage.setItem('whichLift', data.whichLift.options[data.whichLift.selectedIndex].value);
-        } else if (data.locationHill.checked) {
+        } else if (data.location === 'Hill') {
             localStorage.setItem('location', data.locationHill);
             localStorage.setItem('locationHill', data.locationHill);
             localStorage.setItem('whichHill', data.whichHill.options[data.whichHill.selectedIndex].text);
             localStorage.setItem('difficulty', data.whichHill.options[data.whichHill.selectedIndex].value);
-        } else if (data.locationPremise.checked) {
+        } else if (data.location === 'Premise') {
             localStorage.setItem('location', data.locationPremise);
-        }
+        }*/
+
         localStorage.setItem('specificLocation', data.specificLocation);
 
-        //SKIING HISTORY---------------------------------------------------------------------------------------------------
-        if (data.abilityBeginner.checked) {
+        //SKIING HISTORY------------------------------------------------------------------------------------------------
+        localStorage.setItem('ability', data.ability);
+
+        /*if (data.ability === 'Beginner') {
             localStorage.setItem('ability', data.abilityBeginner);
-        } else if (data.abilityIntermediate.checked) {
+        } else if (data.ability === 'Intermediate') {
             localStorage.setItem('ability', data.abilityIntermediate);
-        } else if (data.abilityExpert.checked) {
+        } else if (data.ability === 'Expert') {
             localStorage.setItem('ability', data.abilityExpert);
         } else {
             localStorage.setItem('ability', data.abilityNA);
-        }
-        if (data.lessonYes.checked) {
+        }*/
+
+        localStorage.setItem('inLesson', data.lesson);
+        localStorage.setItem('instructor', data.instructor);
+
+        /*if (data.inLesson === 'Yes') {
             localStorage.setItem('inLesson', data.lessonYes);
             localStorage.setItem('instructor', data.instructor);
-        } else if (data.lessonNo.checked) {
+        } else if (data.inLesson === 'No') {
             localStorage.setItem('inLesson', data.lessonNo);
-        }
-        if (data.timesLift.checked) {
+        }*/
+
+        localStorage.setItem('timesWhere', data.timesWhere);
+
+        /*if (data.timesLift.checked) {
             localStorage.setItem('timesWhere', data.timesLift);
         } else if (data.timesHill.checked) {
             localStorage.setItem('timesWhere', data.timesHill);
         } else if (data.timesOther.checked) {
             localStorage.setItem('timesWhere', data.timesOther);
             localStorage.setItem('setOther', data.numOther);
-        }
+        }*/
+
         localStorage.setItem('numTimesToday', data.numTimesToday);
         localStorage.setItem('numTimesPrior', data.numTimesPrior);
-        if (data.removeFall.checked) {
+
+        localStorage.setItem('removedBy', data.removedBy);
+
+        /*if (data.removeFall.checked) {
             localStorage.setItem('removedBy', data.removeFall);
         } else if (data.removeInjured.checked) {
             localStorage.setItem('removedBy', data.removeInjured);
@@ -102,10 +124,30 @@ export default class SetResultsLocalStorage {
             localStorage.setItem('removedBy', data.removePatrol);
         } else if (data.removeOther.checked) {
             localStorage.setItem('removedBy', data.removeOther);
-        }
+        }*/
 
         //EQUIPMENT--------------------------------------------------------------------------------------------------------
-        if (data.equipAlpine.checked) {
+        localStorage.setItem('equipType', data.equipType);
+        localStorage.setItem('owner', data.owner);
+        if (data.owner === 'Rent' || data.owner === 'Borrowed') {
+            localStorage.setItem('skiNum', data.skiNum);
+            localStorage.setItem('bootNum', data.bootNum);
+            localStorage.setItem('shopName', "Pine Knob");
+            localStorage.setItem('shopStreet', "778 Sashabaw Road");
+            localStorage.setItem('shopCity', "Clarkston");
+            localStorage.setItem('shopState', "MI");
+            localStorage.setItem('shopZip', "48348");
+        } else if (data.owner === 'Other') {
+            localStorage.setItem('skiNum', data.skiNum);
+            localStorage.setItem('bootNum', data.bootNum);
+            localStorage.setItem('shopName', data.shopName);
+            localStorage.setItem('shopStreet', data.shopStreet);
+            localStorage.setItem('shopCity', data.shopCity);
+            localStorage.setItem('shopState', data.shopState);
+            localStorage.setItem('shopZip', data.shopZip);
+        }
+
+       /* if (data.equipAlpine.checked) {
             localStorage.setItem('equipType', data.equipAlpine);
         } else if (data.equipNordic.checked) {
             localStorage.setItem('equipType', data.equipNordic);
@@ -146,14 +188,23 @@ export default class SetResultsLocalStorage {
             localStorage.setItem('shopCity', "Clarkston");
             localStorage.setItem('shopState', "MI");
             localStorage.setItem('shopZip', "48348");
-        }
+        }*/
+
         localStorage.setItem('bindingMake', data.bindingMake);
         localStorage.setItem('bindingModel', data.bindingModel);
         localStorage.setItem('leftDinToe', data.leftDinToe);
         localStorage.setItem('leftDinHeel', data.leftDinHeel);
         localStorage.setItem('rightDinToe', data.rightDinToe);
         localStorage.setItem('rightDinHeel', data.rightDinHeel);
-        if (data.helmetY.checked) {
+
+        localStorage.setItem('helmet', data.helmet);
+        localStorage.setItem('helmetRental', data.helmetRental);
+        localStorage.setItem('helmetNum', data.helmetNum);
+
+        localStorage.setItem('video', data.video);
+        localStorage.setItem('videoName', data.videoName);
+
+        /*if (data.helmetY.checked) {
             localStorage.setItem('helmet', data.helmetY);
             if (data.helmetRentalYes.checked) {
                 localStorage.setItem('helmetRental', data.helmetRentalYes);
@@ -169,7 +220,7 @@ export default class SetResultsLocalStorage {
             localStorage.setItem('videoName', data.videoName);
         } else if (data.videoN.checked) {
             localStorage.setItem('video', data.videoN);
-        }
+        }*/
 
         //INCIDENT DESCRIPTION---------------------------------------------------------------------------------------------
         localStorage.setItem('incidentDescription', data.incidentDescription);

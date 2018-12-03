@@ -93,6 +93,7 @@ class DataHandler {
                 day TEXT,
                 date TEXT,
                 inLesson INTEGER,
+                instructor TEXT,
                 timesWhere INTEGER,
                 numTimesToday INTEGER,
                 numTimesPrior INTEGER,
@@ -101,7 +102,6 @@ class DataHandler {
                 videoName TEXT,
                 incidentDescription TEXT,
                 statementTaker TEXT,
-                witnessData TEXT,
                 reportCompleter TEXT,
                 dateComplete TEXT,
                 finalSig TEXT,
@@ -330,7 +330,7 @@ class DataHandler {
                     }
                 }
             );
-            this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, witnessData, reportCompleter, dateComplete, finalSig, sigLocation)
+            this.db.run(`INSERT INTO pk_incidents (incident_id, patient_id, day, date, inLesson, instructor, timesWhere, numTimesToday, numTimesPrior, incidentTime, video, videoName, incidentDescription, statementTaker, reportCompleter, dateComplete, finalSig, sigLocation)
               VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [data.incident_id, patient_id, data.day, data.date, data.inLesson, data.timesWhere, data.numTimesToday, data.numTimesPrior, data.incidentTime, data.video, data.videoName, data.incidentDescription, data.statementTaker, data.witnessData, data.reportCompleter, data.dateComplete, data.finalSig, data.sigLocation],
                 function(err) {

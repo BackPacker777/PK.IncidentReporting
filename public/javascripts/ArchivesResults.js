@@ -3,6 +3,7 @@
 class ArchivesResults {
     constructor() {
         ArchivesResults.populateResults();
+        console.log(`localStorage = ${localStorage.getItem('day')}`);
     }
 
     static populateResults() {
