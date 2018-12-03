@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="incident_data" uuid="1daa0700-0c67-4d04-8800-8d118a1af7ea">
+    <data-source source="LOCAL" name="incident_data" uuid="eb2f7e1a-7e0d-480c-b431-574a6a1cae8f">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\SANDBOX\PK.IncidentReporting\data\incident_data.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:Z:\SANDBOX\PK.IncidentReporting\data\incident_data.db</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>
