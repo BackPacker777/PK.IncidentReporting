@@ -109,7 +109,26 @@ export default class ProcessArchives {
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
                     // console.log(data[i][j]);
-                    document.getElementById(`incidentData`).innerHTML += `<br><input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[i][j].incident_id}" value="${data[i][j].incident_id}"> &nbsp;&nbsp; | &nbsp;&nbsp; <strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription} &nbsp;&nbsp; <strong>Incident Location:</strong> ${data[i][j].location}`;
+                    document.getElementById(`incidentData`).innerHTML += `<div class="row">
+                        <div class="small-1 columns">
+                            <input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[i][j].incident_id}" value="${data[i][j].incident_id}">
+                        </div>
+                        <div class="small-1 columns">
+                            ${data[i][j].lastName}
+                        </div>
+                        <div class="small-1 columns">
+                            ${data[i][j].firstName}
+                        </div>
+                        <div class="small-1 columns">
+                            ${data[i][j].date}
+                        </div>
+                        <div class="small-7 columns">
+                            ${data[i][j].incidentDescription}
+                        </div>
+                        <div class="small-1 columns">
+                            ${data[i][j].location}
+                        </div>
+                    </div>`
                 }
             }
             this.handleArchivesCheckboxes(data);
@@ -126,6 +145,7 @@ export default class ProcessArchives {
         document.getElementById("selectedArchivesButton").disabled = true;
         for (let i = 1; i < archiveIncidents.length; i++) {
             document.getElementById(`archiveIncident.${i}`).addEventListener("click", () => {
+                console.log(`archiveIncident.${i} clicked`);
                 if (document.getElementById(`archiveIncidents.${i}`).checked) {
                     incidentBoxes.push(document.getElementById(`archiveIncident.${i}`).value);
                     document.getElementById("selectedArchivesButton").classList.remove('disabled');
