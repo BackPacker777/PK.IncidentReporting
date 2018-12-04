@@ -247,15 +247,15 @@ class DataHandler {
         let data = [];
         if (search[0] === 'date') {
             let dateArray = search[1].split('-');
-            dateArray[1] = parseInt(dateArray[1], 10);
-            if (Number(dateArray[1]) < 10) {
-                dateArray[1] = dateArray[1].charAt(1); //to remove the leading zero
-            }
-            if (Number(dateArray[2]) < 10) {
-                dateArray[2] = dateArray[2].charAt(1); //to remove the leading zero
-            }
+            dateArray[1] = parseInt(dateArray[1], 10); //to remove the leading zero
+            dateArray[2] = parseInt(dateArray[2], 10); //to remove the leading zero
             let date = (dateArray[1] + '/' + dateArray[2] + '/' + dateArray[0]);
-            let sql = `SELECT * FROM pk_incidents LEFT JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id WHERE pk_incidents.date = ?`;
+            let sql = `SELECT * FROM pk_incidents INNER JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id
+                      INNER JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id 
+                      INNER JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
+                      INNER JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
+                      INNER JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
+                      WHERE pk_incidents.date = ?`;
             this.db.all(sql, [date], (err, rows) => {
                 if (err) {
                     console.log(`DATE ERR = ${err}`);
@@ -266,7 +266,7 @@ class DataHandler {
                 }
             });
         } else if (search[0] === 'lastName') {
-            let sql = `SELECT * FROM pk_patients LEFT JOIN pk_incidents ON pk_patients.patient_id = pk_incidents.patient_id LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id WHERE pk_patients.lastName = ?`;
+            let sql = `SELECT * FROM pk_patients LEFT JOIN pk_incidents ON pk_patients.patient_id = pk_incidents.patient_id LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id WHERE LOWER(pk_patients.lastName) = ?`;
             this.db.all(sql, [search[1]], (err, rows) => {
                 if (err) {
                     console.log(`NAME ERR = ${err}`);

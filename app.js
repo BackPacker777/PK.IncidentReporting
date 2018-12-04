@@ -187,7 +187,7 @@ class app {
             } else {
                 DATA_HANDLER.renderDom(`HEY! What you're looking for: It's not here!`, 'text/html', httpHandler, 'utf-8');
             }
-        }).listen(PORT);
+        }).listen(PORT) && console.log(`\n-= App listening on port ${PORT} =-\n`);
     }
 }
 
