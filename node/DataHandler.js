@@ -60,7 +60,7 @@ class DataHandler {
                 healthInsurance INTEGER,
                 medications TEXT,
                 ticketType TEXT,
-                groupType TEXT
+                group TEXT
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientEquip (
               patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -308,7 +308,7 @@ class DataHandler {
 
     insertRow(data) {
         data = JSON.parse(data);
-        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability, priorInjury, yearInjured, healthInsurance, medications, ticketType, groupType)
+        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability, priorInjury, yearInjured, healthInsurance, medications, ticketType, group)
          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhoneNum, data.cellPhoneNum, data.ability, data.priorInjury, data.yearInjured, data.hi, data.medications, data.ticketType, data.group],
             function(err) {

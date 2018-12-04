@@ -9,6 +9,29 @@ export default class ProcessArchives {
         document.getElementById("selectedArchivesButton").style.display = 'none';
     }
 
+    setDisplay(whichDiv, visibility) {
+        let divs = ['topMast','topStuff','personalInfo','patientHistory','locations','lifts','hills','history'
+            ,'equipment','incidentDesc','conditions','injury','injuryZone','firstAid','patrollers','transportDestination'
+            ,'witness','completers','bottomStuff','archives'];
+        for (let i = 0; i < divs.length; i++) {
+            if (visibility === 0) {
+                if (divs[i] !== whichDiv) {
+                    document.getElementById(divs[i]).style.display = 'block';
+                }
+                else {
+                    document.getElementById(divs[i]).style.display = 'none';
+                }
+            } else {
+                if (divs[i] !== whichDiv) {
+                    document.getElementById(divs[i]).style.display = 'none';
+                }
+                else {
+                    document.getElementById(divs[i]).style.display = 'block';
+                }
+            }
+        }
+    }
+
     handleArchivesButton() {
         const PASS = '7778';
         document.getElementById("archivesButton").addEventListener("click", () => {
@@ -34,6 +57,7 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
                     document.getElementById("searchDateInput").addEventListener('blur', () => {
+                        document.getElementById('searchButton').style.display = 'block';
                         this.handleSearchButton('date');
                     });
                 } else if (search[i].value === "lastName") {
@@ -41,6 +65,7 @@ export default class ProcessArchives {
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
                     document.getElementById("searchLastNameInput").addEventListener('blur', () => {
+                        document.getElementById('searchButton').style.display = 'block';
                         this.handleSearchButton('lastName');
                     });
                 } else {
@@ -48,33 +73,12 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDInput").addEventListener('blur', () => {
+                        document.getElementById('searchButton').style.display = 'block';
                         this.handleSearchButton('incidentID');
                     });
                 }
             });
         }
-    }
-
-    displaySearchResults(data) {
-        data = JSON.parse(data);
-        if (data[0]. length > 0) {
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < data[i].length; j++) {
-                    // console.log(data[i][j]);
-                    document.getElementById(`incidentData`).innerHTML += `<br><input type="checkbox" name="archiveIncident" value="${data[i][j].incident_id}"> &nbsp;&nbsp; | &nbsp;&nbsp; <strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription} &nbsp;&nbsp; <strong>Incident Location:</strong> ${data[i][j].location}`;
-                }
-            }
-            document.getElementById("selectedArchivesButton").style.display = 'block';
-            this.handleSelectedArchivesButton(data);
-        } else {
-            document.getElementById('incidentData').innerHTML = `<br><br><h1>! No Data !</h1>`;
-        }
-    }
-
-    handleReturnButton() {
-        document.getElementById("returnButton").addEventListener("click", () => {
-            this.setDisplay('archives', 0);
-        });
     }
 
     handleSearchButton(search) {
@@ -89,45 +93,73 @@ export default class ProcessArchives {
                 searchFor = ['incidentID', document.getElementById("searchIncidentIDInput").value];
             }
             this.performFetch(searchFor);
-            document.getElementById('searchButton').removeEventListener("click", removeMe);
+            document.getElementById("searchButton").removeEventListener("click", removeMe);
+            document.getElementById('searchButton').style.display = 'none';
         });
     }
 
-    setDisplay(whichDiv, visibility) {
-        let divs = ['topMast','topStuff','personalInfo','patientHistory','locations','lifts','hills','history'
-            ,'equipment','incidentDesc','conditions','injury','injuryZone','firstAid','patrollers','transportDestination'
-            ,'witness','completers','bottomStuff','archives'];
-        for (let i = 0; i < divs.length; i++) {
-            if (visibility === 0) {
-                if (divs[i] !== whichDiv) {
-                    document.getElementById(divs[i]).style.display = 'block';
-                }
-                else {
-                    document.getElementById(divs[i]).style.display = 'none';
-                }
-            } else {
-                if (divs[i] !== whichDiv) {
-                    document.getElementById(divs[i]).style.display = 'none';
-                }
-                else {
-                    document.getElementById(divs[i]).style.display = 'block';
+    displaySearchResults(data) {
+        data = JSON.parse(data);
+        if (data[0]. length > 0) {
+            for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < data[i].length; j++) {
+                    // console.log(data[i][j]);
+                    document.getElementById(`incidentData`).innerHTML += `<br><input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[i][j].incident_id}" value="${data[i][j].incident_id}"> &nbsp;&nbsp; | &nbsp;&nbsp; <strong>Last Name:</strong> ${data[i][j].lastName} &nbsp;&nbsp; <strong>First Name:</strong> ${data[i][j].firstName} &nbsp;&nbsp; <strong>Date:</strong> ${data[i][j].date} &nbsp;&nbsp; <strong>Incident Description:</strong> ${data[i][j].incidentDescription} &nbsp;&nbsp; <strong>Incident Location:</strong> ${data[i][j].location}`;
                 }
             }
+            this.handleArchivesCheckboxes(data);
+        } else {
+            document.getElementById('incidentData').innerHTML = `<br><br><h1>! No Data !</h1>`;
         }
     }
 
-    handleSelectedArchivesButton(data) {
+    handleArchivesCheckboxes(data) {
         let incidentBoxes = [];
-        let archiveIncidents = document.getElementsByName('archiveIncident');
-        document.getElementById("selectedArchivesButton").addEventListener("click", () => {
-            for (let i = 0; i < archiveIncidents.length; i++) {
-                if (archiveIncidents[i].checked) {
-                    incidentBoxes.push(archiveIncidents[i].value);
+        let archiveIncidents = document.getElementsByName('archiveIncidents');
+        document.getElementById("selectedArchivesButton").style.display = 'block';
+        document.getElementById("selectedArchivesButton").className += 'disabled';
+        document.getElementById("selectedArchivesButton").disabled = true;
+        for (let i = 1; i < archiveIncidents.length; i++) {
+            document.getElementById(`archiveIncident.${i}`).addEventListener("click", () => {
+                if (document.getElementById(`archiveIncidents.${i}`).checked) {
+                    incidentBoxes.push(document.getElementById(`archiveIncident.${i}`).value);
+                    document.getElementById("selectedArchivesButton").className -= 'disabled';
+                    document.getElementById("selectedArchivesButton").disabled = false;
+                } else {
+                    for (let incident of archiveIncidents) {
+                        if (incident === document.getElementById(`archiveIncident.${i}`).value) {
+                            incidentBoxes.splice(incident, 1);
+                            if (archiveIncidents.length < 1) {
+                                document.getElementById("selectedArchivesButton").className += 'disabled';
+                                document.getElementById("selectedArchivesButton").disabled = true;
+                                this.handleSelectedArchivesButton();
+                            } else {
+                                this.handleSelectedArchivesButton(incidentBoxes, data);
+                            }
+                        }
+                    }
                 }
-            }
-            for (let i = 0; i < incidentBoxes.length; i++) {
-                new SetResultsLocalStorage(incidentBoxes[i], data);
-            }
+            });
+        }
+    }
+
+    handleSelectedArchivesButton(incidentBoxes, data) {
+        let removeMe;
+        if (incidentBoxes) {
+            document.getElementById("selectedArchivesButton").addEventListener("click", removeMe = () => {
+                for (let i = 0; i < incidentBoxes.length; i++) {
+                    new SetResultsLocalStorage(incidentBoxes[i], data);
+                }
+                incidentBoxes = [];
+            });
+        } else {
+            document.getElementById("selectedArchivesButton").removeEventListener("click", removeMe);
+        }
+    }
+
+    handleReturnButton() {
+        document.getElementById("returnButton").addEventListener("click", () => {
+            this.setDisplay('archives', 0);
         });
     }
 
