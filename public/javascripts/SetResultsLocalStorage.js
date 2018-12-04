@@ -43,7 +43,7 @@ export default class SetResultsLocalStorage {
         localStorage.setItem('hi', data.healthInsurance);
         localStorage.setItem('meds', data.meds);
         localStorage.setItem('ticketType', data.ticketType);
-        localStorage.setItem('group', data.group);
+        localStorage.setItem('group', data.groupName);
 
         //LOCATION---------------------------------------------------------------------------------------------------------
         localStorage.setItem('location', data.location);

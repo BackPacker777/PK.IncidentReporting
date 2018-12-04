@@ -413,7 +413,6 @@ class results {
 
     //SITE CONDITIONS-------------------------------------------------------------------------------------------------------
         if (sessionStorage.getItem('sceneSurface')) {
-            console.log(sessionStorage.getItem('sceneSurface'));
             if (sessionStorage.getItem('sceneSurface').match("powder")) {
                 document.getElementById('powder').checked = true;
             }

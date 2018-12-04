@@ -6,7 +6,7 @@ export default class ProcessArchives {
     constructor() {
         this.handleArchivesButton();
         this.handleReturnButton();
-        document.getElementById("selectedArchivesButton").style.display = 'none';
+        document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
     }
 
     setDisplay(whichDiv, visibility) {
@@ -38,6 +38,7 @@ export default class ProcessArchives {
             let password = prompt(`PASSWORD:`);
             if (password === PASS) {
                 this.setDisplay('archives', 1);
+                document.getElementById("searchBlank").style.visibility = 'hidden';
                 document.getElementById("searchDateDiv").style.display = 'none';
                 document.getElementById("searchLastNameDiv").style.display = 'none';
                 document.getElementById("searchIncidentIDDiv").style.display = 'none';
@@ -53,6 +54,7 @@ export default class ProcessArchives {
         for (let i = 0; i < search.length; i++) {
             search[i].addEventListener("click", () => {
                 if (search[i].value === "date") {
+                    document.getElementById("searchBlank").style.display = 'none';
                     document.getElementById("searchDateDiv").style.display = 'block';
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
@@ -61,6 +63,7 @@ export default class ProcessArchives {
                         this.handleSearchButton('date');
                     });
                 } else if (search[i].value === "lastName") {
+                    document.getElementById("searchBlank").style.display = 'none';
                     document.getElementById("searchLastNameDiv").style.display = 'block';
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
@@ -69,6 +72,7 @@ export default class ProcessArchives {
                         this.handleSearchButton('lastName');
                     });
                 } else {
+                    document.getElementById("searchBlank").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'block';
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchDateDiv").style.display = 'none';
@@ -82,9 +86,10 @@ export default class ProcessArchives {
     }
 
     handleSearchButton(search) {
+        document.getElementById("searchButton").classList.remove('disabled');
+        document.getElementById("searchButton").disabled = false;
         let searchFor;
-        let removeMe;
-        document.getElementById("searchButton").addEventListener("click", removeMe = () => {
+        document.getElementById("searchButton").addEventListener("click", () => {
             if (search === 'date') {
                 searchFor = ['date', document.getElementById("searchDateInput").value];
             } else if (search === 'lastName') {
@@ -93,8 +98,8 @@ export default class ProcessArchives {
                 searchFor = ['incidentID', document.getElementById("searchIncidentIDInput").value];
             }
             this.performFetch(searchFor);
-            document.getElementById("searchButton").removeEventListener("click", removeMe);
-            document.getElementById('searchButton').style.display = 'none';
+            document.getElementById("searchButton").classList.add('disabled');
+            document.getElementById("searchButton").disabled = true;
         });
     }
 
@@ -117,20 +122,20 @@ export default class ProcessArchives {
         let incidentBoxes = [];
         let archiveIncidents = document.getElementsByName('archiveIncidents');
         document.getElementById("selectedArchivesButton").style.display = 'block';
-        document.getElementById("selectedArchivesButton").className += 'disabled';
+        document.getElementById("selectedArchivesButton").classList.add('disabled');
         document.getElementById("selectedArchivesButton").disabled = true;
         for (let i = 1; i < archiveIncidents.length; i++) {
             document.getElementById(`archiveIncident.${i}`).addEventListener("click", () => {
                 if (document.getElementById(`archiveIncidents.${i}`).checked) {
                     incidentBoxes.push(document.getElementById(`archiveIncident.${i}`).value);
-                    document.getElementById("selectedArchivesButton").className -= 'disabled';
+                    document.getElementById("selectedArchivesButton").classList.remove('disabled');
                     document.getElementById("selectedArchivesButton").disabled = false;
                 } else {
                     for (let incident of archiveIncidents) {
                         if (incident === document.getElementById(`archiveIncident.${i}`).value) {
                             incidentBoxes.splice(incident, 1);
                             if (archiveIncidents.length < 1) {
-                                document.getElementById("selectedArchivesButton").className += 'disabled';
+                                document.getElementById("selectedArchivesButton").classList.add('disabled');
                                 document.getElementById("selectedArchivesButton").disabled = true;
                                 this.handleSelectedArchivesButton();
                             } else {

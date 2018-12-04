@@ -57,18 +57,18 @@ class DataHandler {
                 ability TEXT,
                 priorInjury TEXT,
                 yearInjured INTEGER,
-                healthInsurance INTEGER,
+                healthInsurance TEXT,
                 medications TEXT,
                 ticketType TEXT,
-                group TEXT
+                groupName TEXT
             )`);
             this.db.run(`CREATE TABLE IF NOT EXISTS pk_patientEquip (
               patientEquip_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
               patient_id INTEGER,
               removedBy TEXT,
-              equipType INTEGER,
+              equipType TEXT,
               otherEquip TEXT,
-              owner INTEGER,
+              owner TEXT,
               skiNum INTEGER,
               bootNum INTEGER,
               shopName TEXT,
@@ -308,9 +308,9 @@ class DataHandler {
 
     insertRow(data) {
         data = JSON.parse(data);
-        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability, priorInjury, yearInjured, healthInsurance, medications, ticketType, group)
+        this.db.run(`INSERT INTO pk_patients (lastName, firstName, gender, dob, age, height, weight, patientStreet, patientCity, patientState, patientZip, email, occupation, homePhoneNum, cellPhoneNum, ability, priorInjury, yearInjured, healthInsurance, medications, ticketType, groupName)
          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhoneNum, data.cellPhoneNum, data.ability, data.priorInjury, data.yearInjured, data.hi, data.medications, data.ticketType, data.group],
+            [data.lastName, data.firstName, data.gender, data.dob, data.age, data.height, data.weight, data.patientStreet, data.patientCity, data.patientState, data.patientZip, data.email, data.occupation, data.homePhoneNum, data.cellPhoneNum, data.ability, data.priorInjury, data.yearInjured, data.hi, data.medications, data.ticketType, data.groupName],
             function(err) {
                 if (err) {
                     return console.log(err.message);
@@ -367,7 +367,7 @@ class DataHandler {
             }
             this.db.run(`INSERT INTO pk_firstAid (firstAid_id, patient_id, injuryType, injuryTypeOther, injuryZone, injuryZoneOther, hillFirstAid, patrolRoomAid, scenePatrollers_0, scenePatrollers_1, scenePatrollers_2, scenePatrollers_3, scenePatrollers_4, scenePatrollers_5, transportPatrollers_0, transportPatrollers_1, transportPatrollers_2, transportPatrollers_3, transportPatrollers_4, transportPatrollers_5, aidRoomPatrollers_0, aidRoomPatrollers_1, aidRoomPatrollers_2, aidRoomPatrollers_3, aidRoomPatrollers_4, aidRoomPatrollers_5, arrive, arrivalOther, leave, dest, destOther)
               VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [data.firstAid_id, patient_id, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers_0, data.scenePatrollers_1, data.scenePatrollers_2, data.scenePatrollers_3, data.scenePatrollers_4, data.scenePatrollers_5, data.transportPatrollers_0, data.transportPatrollers_1, data.transportPatrollers_2, data.transportPatrollers_3, data.transportPatrollers_4, data.transportPatrollers_5, data.aidPatrollers_0, data.aidPatrollers_1, data.aidPatrollers_2, data.aidPatrollers_3, data.aidPatrollers_4, data.aidPatrollers_5, data.arrive, data.arrivalOther, data.leave, data.dest, data.destOther],
+                [data.firstAid_id, patient_id, data.injuryType, data.injuryTypeOther, data.injuryZone, data.injuryZoneOther, data.hillFirstAid, data.patrolRoomAid, data.scenePatrollers_0, data.scenePatrollers_1, data.scenePatrollers_2, data.scenePatrollers_3, data.scenePatrollers_4, data.scenePatrollers_5, data.transportPatrollers_0, data.transportPatrollers_1, data.transportPatrollers_2, data.transportPatrollers_3, data.transportPatrollers_4, data.transportPatrollers_5, data.aidPatrollers_0, data.aidPatrollers_1, data.aidPatrollers_2, data.aidPatrollers_3, data.aidPatrollers_4, data.aidPatrollers_5, data.arrive, data.arriveOther, data.leave, data.dest, data.otherDest],
                 function(err) {
                     if (err) {
                         return console.log(err.message);

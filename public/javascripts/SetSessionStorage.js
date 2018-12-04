@@ -40,9 +40,11 @@ export default class SetSessionStorage {
         } else if (document.getElementById('hiNo').checked) {
             sessionStorage.setItem('hi', document.getElementById('hiNo').value);
         }
-        sessionStorage.setItem('meds', document.getElementById('meds').value);
+        sessionStorage.setItem('medications', document.getElementById('meds').value);
+        console.log(sessionStorage.getItem('medications'));
         sessionStorage.setItem('ticketType', document.getElementById('ticketType').value);
-        sessionStorage.setItem('group', document.getElementById('group').value);
+        sessionStorage.setItem('groupName', document.getElementById('group').value);
+        console.log(sessionStorage.getItem('groupName'));
 
         //LOCATION---------------------------------------------------------------------------------------------------------
         if (document.getElementById('locationLift').checked) {
