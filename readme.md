@@ -3,7 +3,7 @@
 * ~~Change rental addresses in all results~~
 * ~~Update ALL sql tables with incident data, not just patients~~
 * Fix how sessionStorage saves variable data such as hill/lift & witnesses to database
-* Fix 'Generate reports' button to remove event listener and clear page when clicked
+* Fix 'Generate reports' button to remove event listener and clear page when clicked.
 
 
 # URLs
