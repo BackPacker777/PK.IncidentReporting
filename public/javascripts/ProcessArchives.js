@@ -53,6 +53,12 @@ export default class ProcessArchives {
     }
 
     handleArchiveSearching() {
+        document.getElementById(`searchRow`).addEventListener('keypress', (evt) => {
+            let key = evt.which;
+            if (key === 13 || key === 169) {
+                evt.preventDefault();
+            }
+        });
         let search = document.forms['mainForm'].elements['searchCriteria'];
         for (let i = 0; i < search.length; i++) {
             search[i].addEventListener("click", () => {
@@ -164,7 +170,6 @@ export default class ProcessArchives {
     }
 
     handleArchivesCheckboxes(data) {
-        let incidentBoxes = [];
         let archiveIncidents = document.getElementsByName('archiveIncidents');
         document.getElementById("selectedArchivesButton").style.visibility = 'visible';
         document.getElementById("selectedArchivesButton").classList.add('disabled');
@@ -172,36 +177,25 @@ export default class ProcessArchives {
         for (let i = 0; i < archiveIncidents.length; i++) {
             let occurrence = i + 1;
             document.getElementById(`archiveIncident.${occurrence}`).addEventListener("click", () => {
-                let incidentBoxes = [];
                 if (document.getElementById(`archiveIncident.${occurrence}`).checked) {
-                    incidentBoxes.push(document.getElementById(`archiveIncident.${occurrence}`).value);
                     document.getElementById("selectedArchivesButton").style.visibility = 'visible';
-                    document.getElementById("selectedArchivesButton").classList.remove('disabled');
-                    document.getElementById("selectedArchivesButton").disabled = false;
-                } else {
-                    for (let incident of archiveIncidents) {
-                        if (incident === document.getElementById(`archiveIncident.${occurrence}`).value) {
-                            incidentBoxes.splice(incident, 1);
-                            break;
-                        }
-                    }
-                }
-                if (archiveIncidents.length < 1) {
-                    document.getElementById("selectedArchivesButton").classList.add('disabled');
-                    document.getElementById("selectedArchivesButton").disabled = true;
-                    this.handleSelectedArchivesButton();
-                } else {
-                    this.handleSelectedArchivesButton(incidentBoxes, data);
+                    this.handleSelectedArchivesButton(data);
                 }
             });
         }
     }
 
-    handleSelectedArchivesButton(incidentBoxes, data) {
-        console.log(incidentBoxes);
-        console.log(data);
+    handleSelectedArchivesButton(data) {
+        let incidentBoxes = [];
         let removeMe;
         localStorage.clear();
+        let archiveIncidents = document.getElementsByName('archiveIncidents');
+        for (let i = 0; i < archiveIncidents.length; i++) {
+            let occurrence = i + 1;
+            if (document.getElementById(`archiveIncident.${occurrence}`).checked) {
+                incidentBoxes.push(document.getElementById(`archiveIncident.${occurrence}`).value);
+            }
+        }
         if (incidentBoxes) {
             document.getElementById("selectedArchivesButton").addEventListener("click", removeMe = () => {
                 for (let i = 0; i < incidentBoxes.length; i++) {
