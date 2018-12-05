@@ -6,7 +6,6 @@ export default class SetResultsLocalStorage {
             for (let j = 0; j < data[i].length; j++) {
                 if (Number(data[i][j].incident_id) === Number(incident_id)) {
                     console.log(data[i][j]);
-                    localStorage.clear();
                     SetResultsLocalStorage.saveData(data[i][j]);
                     window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
                 }
@@ -99,7 +98,7 @@ export default class SetResultsLocalStorage {
 
         //INCIDENT DESCRIPTION---------------------------------------------------------------------------------------------
         localStorage.setItem('incidentDescription', data.incidentDescription);
-        localStorage.setItem('statementTaker', data.statementTaker_0);
+        localStorage.setItem('statementTaker', data.statementTaker);
 
         //PROBABLE INJURY--------------------------------------------------------------------------------------------------
         localStorage.setItem('injuryType', data.injuryType);
@@ -170,7 +169,7 @@ export default class SetResultsLocalStorage {
         localStorage.setItem('dest', data.dest);
 
         //WITNESSESS----------------------------------------------------------------------------------------------------
-        if (data.w0LastName) {
+        if (data.w0name) {
             let count = 0;
             while (count >= 0) {
                 if (document.getElementById(`w${count}LastName`)) {
@@ -188,7 +187,7 @@ export default class SetResultsLocalStorage {
         }
 
         //REPORT COMPLETER----------------------------------------------------------------------------------------------
-        localStorage.setItem('reportCompleter', data.reportCompleter_0);
+        localStorage.setItem('reportCompleter', data.reportCompleter);
         localStorage.setItem('dateComplete', data.dateComplete);
 
         //SIGNATURE-----------------------------------------------------------------------------------------------------

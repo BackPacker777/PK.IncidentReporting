@@ -244,7 +244,6 @@ class DataHandler {
 
     queryData(search, callback) {
         search = search.split(',');
-        console.log(search);
         let data = [];
         if (search[0] === 'date') {
             let dateArray = search[1].split('-');

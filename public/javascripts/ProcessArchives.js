@@ -63,7 +63,7 @@ export default class ProcessArchives {
                     document.getElementById("searchDateDiv").style.display = 'block';
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
-                    document.getElementById("searchDateInput").addEventListener('keyup', () => {
+                    document.getElementById("searchDateInput").addEventListener('focus', () => {
                         document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('date');
                     });
@@ -73,7 +73,7 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'block';
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
-                    document.getElementById("searchLastNameInput").addEventListener('keyup', () => {
+                    document.getElementById("searchLastNameInput").addEventListener('focus', () => {
                         document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('lastName');
                     });
@@ -83,7 +83,7 @@ export default class ProcessArchives {
                     document.getElementById("searchIncidentIDDiv").style.display = 'block';
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchDateDiv").style.display = 'none';
-                    document.getElementById("searchIncidentIDInput").addEventListener('keyup', () => {
+                    document.getElementById("searchIncidentIDInput").addEventListener('focus', () => {
                         document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('incidentID');
                     });
@@ -93,6 +93,9 @@ export default class ProcessArchives {
     }
 
     handleSearchButton(search) {
+        document.getElementById("searchDateInput").value = '';
+        document.getElementById("searchIncidentIDInput").value = '';
+        document.getElementById("searchLastNameInput").value = '';
         document.getElementById("searchButton").classList.remove('disabled');
         document.getElementById("searchButton").disabled = false;
         let searchFor = [];
@@ -106,7 +109,6 @@ export default class ProcessArchives {
             } else {
                 searchFor = ['incidentID', document.getElementById("searchIncidentIDInput").value];
             }
-            console.log(searchFor)
             this.performFetch(searchFor);
             searchFor = [];
             document.getElementById("searchButton").removeEventListener("click", removeMe);
@@ -170,6 +172,7 @@ export default class ProcessArchives {
         for (let i = 0; i < archiveIncidents.length; i++) {
             let occurrence = i + 1;
             document.getElementById(`archiveIncident.${occurrence}`).addEventListener("click", () => {
+                let incidentBoxes = [];
                 if (document.getElementById(`archiveIncident.${occurrence}`).checked) {
                     incidentBoxes.push(document.getElementById(`archiveIncident.${occurrence}`).value);
                     document.getElementById("selectedArchivesButton").style.visibility = 'visible';
@@ -198,6 +201,7 @@ export default class ProcessArchives {
         console.log(incidentBoxes);
         console.log(data);
         let removeMe;
+        localStorage.clear();
         if (incidentBoxes) {
             document.getElementById("selectedArchivesButton").addEventListener("click", removeMe = () => {
                 for (let i = 0; i < incidentBoxes.length; i++) {

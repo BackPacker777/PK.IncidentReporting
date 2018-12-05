@@ -416,10 +416,10 @@ class results {
             if (sessionStorage.getItem('sceneSurface').match("powder")) {
                 document.getElementById('powder').checked = true;
             }
-            if (sessionStorage.getItem('sceneSurface').match("packedpowder")) {
+            if (sessionStorage.getItem('sceneSurface').match("packed")) {
                 document.getElementById('packedPowder').checked = true;
             }
-            if (sessionStorage.getItem('sceneSurface').match("hardpacked")) {
+            if (sessionStorage.getItem('sceneSurface').match("hard")) {
                 document.getElementById('hardPacked').checked = true;
             }
             if (sessionStorage.getItem('sceneSurface').match("variable")) {
