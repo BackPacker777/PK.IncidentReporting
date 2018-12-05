@@ -5,7 +5,7 @@ import ProcessArchives from './ProcessArchives.js';
 
 export default class EventHandler {
     constructor(year, day, month) {
-        new ProcessArchives();
+        this.handleArchivesButton();
         this.loadIncidentNumber();
         this.loadZipData();
         this.loadHills();
@@ -28,6 +28,18 @@ export default class EventHandler {
         this.handlePatrollers("reportCompleter", 0);
         this.handleSubmit();
         this.handleReset();
+    }
+
+    handleArchivesButton() {
+        const PASS = '7778';
+        document.getElementById("archivesButton").addEventListener("click", () => {
+            let password = prompt(`PASSWORD:`);
+            if (password === PASS) {
+                new ProcessArchives();
+            } else {
+                alert(`Invalid password!`);
+            }
+        });
     }
 
     loadIncidentNumber() {

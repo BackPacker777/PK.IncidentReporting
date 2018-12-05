@@ -4,29 +4,21 @@ import SetResultsLocalStorage from './SetResultsLocalStorage.js';
 
 export default class ProcessArchives {
     constructor() {
-        this.handleArchivesButton();
+        this.prepArchivesUX();
         this.handleReturnButton();
     }
 
-    handleArchivesButton() {
-        const PASS = '7778';
-        document.getElementById("archivesButton").addEventListener("click", () => {
-            let password = prompt(`PASSWORD:`);
-            if (password === PASS) {
-                this.setDisplay('archives', 1);
-                document.getElementById(`incidentData`).innerHTML = '';
-                document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
-                document.getElementById("searchButton").classList.add('disabled');
-                document.getElementById("searchButton").disabled = true;
-                document.getElementById("searchBlank").style.visibility = 'hidden';
-                document.getElementById("searchDateDiv").style.display = 'none';
-                document.getElementById("searchLastNameDiv").style.display = 'none';
-                document.getElementById("searchIncidentIDDiv").style.display = 'none';
-                this.handleArchiveSearching();
-            } else {
-                alert(`Invalid password!`);
-            }
-        });
+    prepArchivesUX() {
+        this.setDisplay('archives', 1);
+        document.getElementById(`incidentData`).innerHTML = '';
+        document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
+        document.getElementById("searchButton").classList.add('disabled');
+        document.getElementById("searchButton").disabled = true;
+        document.getElementById("searchBlank").style.visibility = 'hidden';
+        document.getElementById("searchDateDiv").style.display = 'none';
+        document.getElementById("searchLastNameDiv").style.display = 'none';
+        document.getElementById("searchIncidentIDDiv").style.display = 'none';
+        this.handleArchiveSearching();
     }
 
     setDisplay(whichDiv, visibility) {
@@ -53,6 +45,7 @@ export default class ProcessArchives {
     }
 
     handleArchiveSearching() {
+        document.getElementById(`incidentData`).innerHTML = '';
         document.getElementById(`searchRow`).addEventListener('keypress', (evt) => {
             let key = evt.which;
             if (key === 13 || key === 169) {
@@ -61,7 +54,8 @@ export default class ProcessArchives {
         });
         let search = document.forms['mainForm'].elements['searchCriteria'];
         for (let i = 0; i < search.length; i++) {
-            search[i].addEventListener("click", () => {
+            search[i].addEventListener("click", (event) => {
+                event.stopImmediatePropagation();
                 document.getElementById(`incidentData`).innerHTML = '';
                 if (search[i].value === "date") {
                     document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
@@ -69,7 +63,8 @@ export default class ProcessArchives {
                     document.getElementById("searchDateDiv").style.display = 'block';
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
-                    document.getElementById("searchDateInput").addEventListener('focus', () => {
+                    document.getElementById("searchDateInput").addEventListener('focus', (event) => {
+                        event.stopImmediatePropagation();
                         document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('date');
                     });
@@ -79,7 +74,8 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'block';
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
-                    document.getElementById("searchLastNameInput").addEventListener('focus', () => {
+                    document.getElementById("searchLastNameInput").addEventListener('focus', (event) => {
+                        event.stopImmediatePropagation(); //https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
                         document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('lastName');
                     });
@@ -89,7 +85,8 @@ export default class ProcessArchives {
                     document.getElementById("searchIncidentIDDiv").style.display = 'block';
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchDateDiv").style.display = 'none';
-                    document.getElementById("searchIncidentIDInput").addEventListener('focus', () => {
+                    document.getElementById("searchIncidentIDInput").addEventListener('focus', (event) => {
+                        event.stopImmediatePropagation();
                         document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('incidentID');
                     });
@@ -191,7 +188,6 @@ export default class ProcessArchives {
 
     handleSelectedArchivesButton(data) {
         let incidentBoxes = [];
-        let removeMe;
         localStorage.clear();
         let archiveIncidents = document.getElementsByName('archiveIncidents');
         archiveIncidents.forEach((incident) => {
@@ -199,19 +195,39 @@ export default class ProcessArchives {
                 incidentBoxes.push(incident.value);
             }
         });
+        console.log(data.length);
+        console.log(data[0].length);
         if (incidentBoxes) {
-            document.getElementById("selectedArchivesButton").addEventListener("click", removeMe = () => {
-                for (let i = 0; i < incidentBoxes.length; i++) {
-                    new SetResultsLocalStorage(incidentBoxes[i], data);
+            document.getElementById("selectedArchivesButton").addEventListener("click", () => {
+                for (let i = 0; i < data[0][i].length; i++) {
+                    if (Number(data[0][1].incident_id) === Number(incidentBoxes[i])) {
+                        console.log(data[0][i]);
+                    }
                 }
-                document.getElementById("selectedArchivesButton").removeEventListener("click", removeMe);
+
+                // for (let j = 0; j < data[i].length; j++) {
+                //     if (Number(data[i][j].incident_id) === Number(incidentBoxes[j])) {
+                //         console.log(data[i][j]);
+                //     }
+                // }
+
+
+                // for (let i = 0; i < incidentBoxes.length; i++) {
+                //     console.log(data[i]);
+                //     for (let j = 0; j < data[i].length; j++) {
+                //         if (Number(data[i][j].incident_id) === Number(incidentBoxes[i])) {
+                //             console.log(data[i][j].incident_id);
+                //             // new SetResultsLocalStorage(incidentBoxes[i], data);
+                //             break;
+                //         }
+                //     }
+                // }
                 document.getElementById("selectedArchivesButton").classList.add('disabled');
                 document.getElementById("selectedArchivesButton").disabled = true;
                 document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
                 incidentBoxes = [];
-            });
+            }, {once: true});
         } else {
-            document.getElementById("selectedArchivesButton").removeEventListener("click", removeMe);
             document.getElementById("selectedArchivesButton").classList.add('disabled');
             document.getElementById("selectedArchivesButton").disabled = true;
             document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
