@@ -5,7 +5,6 @@ export default class SetResultsLocalStorage {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].length; j++) {
                 if (Number(data[i][j].incident_id) === Number(incident_id)) {
-                    console.log(data[i][j]);
                     SetResultsLocalStorage.saveData(data[i][j]);
                     window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
                 }

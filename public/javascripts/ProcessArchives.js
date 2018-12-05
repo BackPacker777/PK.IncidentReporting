@@ -136,7 +136,7 @@ export default class ProcessArchives {
                 </div>`;
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
-                    console.log(data[i][j]);
+                    // console.log(data[i][j]);
                     document.getElementById(`incidentData`).innerHTML += `<div class="row">
                         <div class="small-1 columns text-center">
                             <input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[i][j].incident_id}" value="${data[i][j].incident_id}">
@@ -174,15 +174,19 @@ export default class ProcessArchives {
         document.getElementById("selectedArchivesButton").style.visibility = 'visible';
         document.getElementById("selectedArchivesButton").classList.add('disabled');
         document.getElementById("selectedArchivesButton").disabled = true;
-        for (let i = 0; i < archiveIncidents.length; i++) {
-            let occurrence = i + 1;
-            document.getElementById(`archiveIncident.${occurrence}`).addEventListener("click", () => {
-                if (document.getElementById(`archiveIncident.${occurrence}`).checked) {
-                    document.getElementById("selectedArchivesButton").style.visibility = 'visible';
+        let incidentChecked = false;
+        archiveIncidents.forEach((incident) => {
+            incident.addEventListener('click', () => { //https://stackoverflow.com/a/40956816/466246
+                if (incident.checked) {
+                    incidentChecked = true;
+                }
+                if (incidentChecked) {
+                    document.getElementById("selectedArchivesButton").classList.remove('disabled');
+                    document.getElementById("selectedArchivesButton").disabled = false;
                     this.handleSelectedArchivesButton(data);
                 }
             });
-        }
+        });
     }
 
     handleSelectedArchivesButton(data) {
@@ -190,12 +194,11 @@ export default class ProcessArchives {
         let removeMe;
         localStorage.clear();
         let archiveIncidents = document.getElementsByName('archiveIncidents');
-        for (let i = 0; i < archiveIncidents.length; i++) {
-            let occurrence = i + 1;
-            if (document.getElementById(`archiveIncident.${occurrence}`).checked) {
-                incidentBoxes.push(document.getElementById(`archiveIncident.${occurrence}`).value);
+        archiveIncidents.forEach((incident) => {
+            if (incident.checked) {
+                incidentBoxes.push(incident.value);
             }
-        }
+        });
         if (incidentBoxes) {
             document.getElementById("selectedArchivesButton").addEventListener("click", removeMe = () => {
                 for (let i = 0; i < incidentBoxes.length; i++) {
@@ -222,7 +225,6 @@ export default class ProcessArchives {
     }
 
     performFetch(criteria) {
-        console.log(criteria);
         fetch(document.url, {
             method: 'POST',
             body: criteria,
