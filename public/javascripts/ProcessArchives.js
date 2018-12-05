@@ -64,7 +64,7 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
                     document.getElementById("searchDateInput").addEventListener('keyup', () => {
-                        // document.getElementById('searchButton').style.display = 'block';
+                        document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('date');
                     });
                 } else if (search[i].value === "lastName") {
@@ -74,7 +74,7 @@ export default class ProcessArchives {
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDDiv").style.display = 'none';
                     document.getElementById("searchLastNameInput").addEventListener('keyup', () => {
-                        // document.getElementById('searchButton').style.display = 'block';
+                        document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('lastName');
                     });
                 } else {
@@ -84,7 +84,7 @@ export default class ProcessArchives {
                     document.getElementById("searchLastNameDiv").style.display = 'none';
                     document.getElementById("searchDateDiv").style.display = 'none';
                     document.getElementById("searchIncidentIDInput").addEventListener('keyup', () => {
-                        // document.getElementById('searchButton').style.display = 'block';
+                        document.getElementById(`incidentData`).innerHTML = '';
                         this.handleSearchButton('incidentID');
                     });
                 }
@@ -106,6 +106,7 @@ export default class ProcessArchives {
             } else {
                 searchFor = ['incidentID', document.getElementById("searchIncidentIDInput").value];
             }
+            console.log(searchFor)
             this.performFetch(searchFor);
             searchFor = [];
             document.getElementById("searchButton").removeEventListener("click", removeMe);
@@ -152,7 +153,11 @@ export default class ProcessArchives {
             }
             this.handleArchivesCheckboxes(data);
         } else {
-            document.getElementById('incidentData').innerHTML = `<br><br><h1>! No Data !</h1>`;
+            document.getElementById('incidentData').innerHTML = `<br><div class="row" id="noDataDiv">
+                    <div class="small-12 columns text-center">
+                        <h1>! No Data !</h1>
+                    </div>
+                </div>`;
         }
     }
 
@@ -219,6 +224,7 @@ export default class ProcessArchives {
     }
 
     performFetch(criteria) {
+        console.log(criteria);
         fetch(document.url, {
             method: 'POST',
             body: criteria,
