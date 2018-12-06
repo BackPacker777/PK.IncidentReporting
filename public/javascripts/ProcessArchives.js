@@ -1,6 +1,6 @@
 "use strict";
 
-import SetResultsLocalStorage from './SetResultsLocalStorage.js';
+import SetResultsSessionStorage from './SetResultsSessionStorage.js';
 
 export default class ProcessArchives {
     constructor() {
@@ -177,10 +177,10 @@ export default class ProcessArchives {
                 for (let i = 0; i < incidentBoxes.length; i++) {
                     for (let j = 0; j < data[0].length; j++) {
                         if (Number(data[0][j].incident_id) === Number(incidentBoxes[i])) {
-                            console.log(`DATA: ${data[0][j].lastName}`);
-                            new SetResultsLocalStorage(data[0][j]);
+                            new SetResultsSessionStorage(data[0][j]);
                         }
                     }
+                    sessionStorage.clear();
                 }
             } else {
                 alert(`Nothing Selected`);
