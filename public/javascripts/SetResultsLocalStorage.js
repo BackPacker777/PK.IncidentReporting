@@ -1,15 +1,19 @@
 "use strict";
 
 export default class SetResultsLocalStorage {
-    constructor(incident_id, data) {
-        for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (Number(data[i][j].incident_id) === Number(incident_id)) {
-                    SetResultsLocalStorage.saveData(data[i][j]);
-                    window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
-                }
-            }
-        }
+    constructor(data) {
+        SetResultsLocalStorage.saveData(data);
+        window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
+
+
+        // for (let i = 0; i < data.length; i++) {
+        //     for (let j = 0; j < data[i].length; j++) {
+        //         if (Number(data[i][j].incident_id) === Number(incident_id)) {
+        //             SetResultsLocalStorage.saveData(data[i][j]);
+        //             window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
+        //         }
+        //     }
+        // }
     }
 
     static saveData(data) {

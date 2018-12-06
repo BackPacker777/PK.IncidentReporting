@@ -131,32 +131,30 @@ export default class ProcessArchives {
                     <div class="small-7 columns"><strong>Incident Description:</strong></div>
                     <div class="small-1 columns"><strong>Location:</strong></div>
                 </div>`;
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < data[i].length; j++) {
-                    // console.log(data[i][j]);
-                    document.getElementById(`incidentData`).innerHTML += `<div class="row">
-                        <div class="small-1 columns text-center">
-                            <input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[i][j].incident_id}" value="${data[i][j].incident_id}">
-                        </div>
-                        <div class="small-1 columns">
-                            ${data[i][j].lastName}
-                        </div>
-                        <div class="small-1 columns">
-                            ${data[i][j].firstName}
-                        </div>
-                        <div class="small-1 columns">
-                            ${data[i][j].date}
-                        </div>
-                        <div class="small-7 columns">
-                            ${data[i][j].incidentDescription}
-                        </div>
-                        <div class="small-1 columns">
-                            ${data[i][j].location}
-                        </div>
-                    </div>`
-                }
+            for (let j = 0; j < data[0].length; j++) {
+                document.getElementById(`incidentData`).innerHTML += `<div class="row">
+                    <div class="small-1 columns text-center">
+                        <input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[0][j].incident_id}" value="${data[0][j].incident_id}">
+                    </div>
+                    <div class="small-1 columns">
+                        ${data[0][j].lastName}
+                    </div>
+                    <div class="small-1 columns">
+                        ${data[0][j].firstName}
+                    </div>
+                    <div class="small-1 columns">
+                        ${data[0][j].date}
+                    </div>
+                    <div class="small-7 columns">
+                        ${data[0][j].incidentDescription}
+                    </div>
+                    <div class="small-1 columns">
+                        ${data[0][j].location}
+                    </div>
+                </div>`
             }
-            this.handleArchivesCheckboxes(data);
+            document.getElementById("selectedArchivesButton").style.visibility = 'visible';
+            this.handleSelectedArchivesButton(data);
         } else {
             document.getElementById('incidentData').innerHTML = `<br><div class="row" id="noDataDiv">
                     <div class="small-12 columns text-center">
@@ -166,72 +164,28 @@ export default class ProcessArchives {
         }
     }
 
-    handleArchivesCheckboxes(data) {
-        let archiveIncidents = document.getElementsByName('archiveIncidents');
-        document.getElementById("selectedArchivesButton").style.visibility = 'visible';
-        document.getElementById("selectedArchivesButton").classList.add('disabled');
-        document.getElementById("selectedArchivesButton").disabled = true;
-        let incidentChecked = false;
-        archiveIncidents.forEach((incident) => {
-            incident.addEventListener('click', () => { //https://stackoverflow.com/a/40956816/466246
+    handleSelectedArchivesButton(data) {
+        document.getElementById("selectedArchivesButton").addEventListener("click", () => {
+            let incidentBoxes = [];
+            let archiveIncidents = document.getElementsByName('archiveIncidents');
+            archiveIncidents.forEach((incident) => {
                 if (incident.checked) {
-                    incidentChecked = true;
-                }
-                if (incidentChecked) {
-                    document.getElementById("selectedArchivesButton").classList.remove('disabled');
-                    document.getElementById("selectedArchivesButton").disabled = false;
-                    this.handleSelectedArchivesButton(data);
+                    incidentBoxes.push(incident.value);
                 }
             });
-        });
-    }
-
-    handleSelectedArchivesButton(data) {
-        let incidentBoxes = [];
-        localStorage.clear();
-        let archiveIncidents = document.getElementsByName('archiveIncidents');
-        archiveIncidents.forEach((incident) => {
-            if (incident.checked) {
-                incidentBoxes.push(incident.value);
-            }
-        });
-        console.log(data.length);
-        console.log(data[0].length);
-        if (incidentBoxes) {
-            document.getElementById("selectedArchivesButton").addEventListener("click", () => {
-                for (let i = 0; i < data[0][i].length; i++) {
-                    if (Number(data[0][1].incident_id) === Number(incidentBoxes[i])) {
-                        console.log(data[0][i]);
+            if (incidentBoxes.length > 0) {
+                for (let i = 0; i < incidentBoxes.length; i++) {
+                    for (let j = 0; j < data[0].length; j++) {
+                        if (Number(data[0][j].incident_id) === Number(incidentBoxes[i])) {
+                            console.log(`DATA: ${data[0][j].lastName}`);
+                            new SetResultsLocalStorage(data[0][j]);
+                        }
                     }
                 }
-
-                // for (let j = 0; j < data[i].length; j++) {
-                //     if (Number(data[i][j].incident_id) === Number(incidentBoxes[j])) {
-                //         console.log(data[i][j]);
-                //     }
-                // }
-
-
-                // for (let i = 0; i < incidentBoxes.length; i++) {
-                //     console.log(data[i]);
-                //     for (let j = 0; j < data[i].length; j++) {
-                //         if (Number(data[i][j].incident_id) === Number(incidentBoxes[i])) {
-                //             console.log(data[i][j].incident_id);
-                //             // new SetResultsLocalStorage(incidentBoxes[i], data);
-                //             break;
-                //         }
-                //     }
-                // }
-                document.getElementById("selectedArchivesButton").classList.add('disabled');
-                document.getElementById("selectedArchivesButton").disabled = true;
-                document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
-                incidentBoxes = [];
-            }, {once: true});
-        } else {
-            document.getElementById("selectedArchivesButton").classList.add('disabled');
-            document.getElementById("selectedArchivesButton").disabled = true;
-            document.getElementById("selectedArchivesButton").style.visibility = 'hidden';
-        }
+            } else {
+                alert(`Nothing Selected`);
+            }
+        });
     }
 
     handleReturnButton() {
