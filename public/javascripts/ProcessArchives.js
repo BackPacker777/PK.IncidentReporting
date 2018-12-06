@@ -174,9 +174,11 @@ export default class ProcessArchives {
                 }
             });
             if (incidentBoxes.length > 0) {
+                // FIX THIS SECTION - LOOPING IS BROKEN
                 for (let i = 0; i < incidentBoxes.length; i++) {
                     for (let j = 0; j < data[0].length; j++) {
-                        if (Number(data[0][j].incident_id) === Number(incidentBoxes[i])) {
+                        console.log(data[0][j]);
+                        if (Number(data[0][j].patient_id) === Number(incidentBoxes[j])) {
                             new SetResultsSessionStorage(data[0][j]);
                         }
                     }

@@ -2,7 +2,6 @@
 
 export default class SetResultsSessionStorage {
     constructor(data) {
-        console.log(data);
         SetResultsSessionStorage.saveData(data);
         window.open('/public/views/archives_results.html', '_blank', 'location=yes,height=900,width=1000,scrollbars=yes,status=yes');
     }
@@ -186,22 +185,12 @@ export default class SetResultsSessionStorage {
         sessionStorage.setItem('dest', data.dest);
 
         //WITNESSESS----------------------------------------------------------------------------------------------------
-        if (data.w0name) {
-            let count = 0;
-            while (count >= 0) {
-                if (document.getElementById(`w${count}LastName`)) {
-                    sessionStorage.setItem(`w${count}Name`, document.getElementById(`w${count}LastName`).value + ", " + document.getElementById(`w${count}FirstName`).value);
-                    sessionStorage.setItem(`w${count}Street`, document.getElementById(`w${count}Street`).value);
-                    sessionStorage.setItem(`w${count}CityStateZip`, document.getElementById(`w${count}City`).value + ", " + document.getElementById(`w${count}State`).value + " " + document.getElementById(`w${count}Zip`).value);
-                    sessionStorage.setItem(`w${count}HomePhoneNum`, document.getElementById(`w${count}HomePhoneNum`).value);
-                    sessionStorage.setItem(`w${count}CellPhoneNum`, document.getElementById(`w${count}CellPhoneNum`).value);
-                    sessionStorage.setItem(`w${count}Statement`, document.getElementById(`w${count}Statement`).value);
-                    count++;
-                } else {
-                    break;
-                }
-            }
-        }
+        sessionStorage.setItem('w0Name', data.name);
+        sessionStorage.setItem(`w0Street`, data.street);
+        sessionStorage.setItem(`w0CityStateZip`, data.city_state_zip);
+        sessionStorage.setItem(`w0HomePhoneNum`, data.home_phone);
+        sessionStorage.setItem(`w0CellPhoneNum`, data.cell_phone);
+        sessionStorage.setItem(`w0Statement`, data.statement);
 
         //REPORT COMPLETER----------------------------------------------------------------------------------------------
         sessionStorage.setItem('reportCompleter', data.reportCompleter);

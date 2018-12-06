@@ -254,7 +254,6 @@ class DataHandler {
                       LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id 
                       LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                       LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
-                      LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                       WHERE pk_incidents.date = ?`;
             this.db.all(sql, [date], (err, rows) => {
                 if (err) {
@@ -270,34 +269,49 @@ class DataHandler {
                       LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id
                       LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                       LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
-                      LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                       WHERE LOWER(pk_patients.lastName) = ?`;
             this.db.all(sql, [search[1]], (err, rows) => {
                 if (err) {
                     console.log(`NAME ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    // console.log(data);
                     callback(data);
+                    // console.log(data);
+
                 }
             });
-        } else {
+        } else if (search[0] === 'incidentID') {
             let sql = `SELECT * FROM pk_incidents LEFT JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id
                           LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id
                           LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                           LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
                           LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                           WHERE pk_incidents.incident_id = ?`;
+
             this.db.all(sql, [search[1]], (err, rows) => {
                 if (err) {
                     console.log(`ID ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    // console.log(data);
                     callback(data);
+                    // this.queryWitnesses(data[0][0].patient_id, data, callback);
                 }
             });
         }
+    }
+
+    queryWitnesses(patient, data, callback) {
+        let witness_sql = `SELECT * FROM pk_witnesses WHERE pk_witnesses.patient_id = ?`;
+
+        this.db.all(witness_sql, [patient], (err, rows) => {
+            if (err) {
+                console.log(`ID ERR = ${err}`);
+            } else {
+                data.push(rows);
+                // console.log(data);
+                callback(data);
+            }
+        });
     }
 
     getAllData(callback) {
