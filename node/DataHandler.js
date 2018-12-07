@@ -20,7 +20,6 @@ class DataHandler {
     }
 
     static saveSignature(sig, callback) {
-        console.log(`sig = ${sig}`);
         FS.writeFile(`public/images/signature.png`, sig, 'base64', err => {
             if (err) throw err;
             callback('saved');

@@ -4,8 +4,6 @@ import SetResultsSessionStorage from './SetResultsSessionStorage.js';
 
 export default class ProcessArchives {
     constructor() {
-        let canvas = document.querySelector('#sigCanvas');
-        this.signature = new SignaturePad(canvas);
         this.prepArchivesUX();
         this.handleReturnButton();
     }
@@ -180,8 +178,7 @@ export default class ProcessArchives {
                     for (let j = 0; j < incidentBoxes.length; j++) {
                         if (Number(data[j].patient_id) === Number(incidentBoxes[j])) {
                             if (data[j].finalSig) {
-                                let sig = this.signature.fromDataURL(data[j].finalSig);
-                                console.log(sig);
+                                let sig = data[j].finalSig;
                                 this.performFetch(10, sig);
                             }
                             console.log(data[j]);
