@@ -185,12 +185,23 @@ export default class SetResultsSessionStorage {
         sessionStorage.setItem('dest', data.dest);
 
         //WITNESSESS----------------------------------------------------------------------------------------------------
-        sessionStorage.setItem('w0Name', data.name);
-        sessionStorage.setItem(`w0Street`, data.street);
-        sessionStorage.setItem(`w0CityStateZip`, data.city_state_zip);
-        sessionStorage.setItem(`w0HomePhoneNum`, data.home_phone);
-        sessionStorage.setItem(`w0CellPhoneNum`, data.cell_phone);
-        sessionStorage.setItem(`w0Statement`, data.statement);
+        if (data.witness_id) {
+            let count = 0;
+            const MAX_WITNESS = 8;
+            while (count >= 0 && count < MAX_WITNESS) {
+                if (Number(data.witness_id) === count) {
+                    sessionStorage.setItem(`w${count}Name`, data.name);
+                    sessionStorage.setItem(`w${count}Street`, data.street);
+                    sessionStorage.setItem(`w${count}CityStateZip`, data.city_state_zip);
+                    sessionStorage.setItem(`w${count}HomePhoneNum`, data.home_phone);
+                    sessionStorage.setItem(`w${count}CellPhoneNum`, data.cell_phone);
+                    sessionStorage.setItem(`w${count}Statement`, data.statement);
+                    break;
+                }
+                count++;
+            }
+        }
+
 
         //REPORT COMPLETER----------------------------------------------------------------------------------------------
         sessionStorage.setItem('reportCompleter', data.reportCompleter);

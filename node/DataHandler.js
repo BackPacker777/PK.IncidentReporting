@@ -254,6 +254,7 @@ class DataHandler {
                       LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id 
                       LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                       LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
+                      LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                       WHERE pk_incidents.date = ?`;
             this.db.all(sql, [date], (err, rows) => {
                 if (err) {
@@ -269,6 +270,7 @@ class DataHandler {
                       LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id
                       LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                       LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
+                      LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                       WHERE LOWER(pk_patients.lastName) = ?`;
             this.db.all(sql, [search[1]], (err, rows) => {
                 if (err) {
@@ -285,7 +287,6 @@ class DataHandler {
                           LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id
                           LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                           LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
-                          LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                           WHERE pk_incidents.incident_id = ?`;
 
             this.db.all(sql, [search[1]], (err, rows) => {
@@ -293,8 +294,9 @@ class DataHandler {
                     console.log(`ID ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    callback(data);
-                    // this.queryWitnesses(data[0][0].patient_id, data, callback);
+                    // console.log(data);
+                    // callback(data);
+                    this.queryWitnesses(data[0][0].patient_id, data, callback);
                 }
             });
         }
@@ -307,7 +309,14 @@ class DataHandler {
             if (err) {
                 console.log(`ID ERR = ${err}`);
             } else {
-                data.push(rows);
+                for (let i = 0; i < rows.length; i++) {
+                    let witness = {
+                        `name${[i]}`:
+                    };
+                }
+
+                // data[0]
+                // data.push(rows);
                 // console.log(data);
                 callback(data);
             }

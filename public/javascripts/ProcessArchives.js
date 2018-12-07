@@ -122,6 +122,7 @@ export default class ProcessArchives {
 
     displaySearchResults(data) {
         data = JSON.parse(data);
+        console.log(data);
         if (data[0].length > 0) {
             document.getElementById(`incidentData`).innerHTML += `<div class="row" id="IncidentHeaders">
                     <div class="small-1 columns"><strong>SELECT:</strong></div>
@@ -175,15 +176,26 @@ export default class ProcessArchives {
             });
             if (incidentBoxes.length > 0) {
                 // FIX THIS SECTION - LOOPING IS BROKEN
-                for (let i = 0; i < incidentBoxes.length; i++) {
-                    for (let j = 0; j < data[0].length; j++) {
-                        console.log(data[0][j]);
-                        if (Number(data[0][j].patient_id) === Number(incidentBoxes[j])) {
-                            new SetResultsSessionStorage(data[0][j]);
+                for (let i = 0; i < data.length; i++) {
+                    for (let j = 0; j < incidentBoxes.length; j++) {
+                        if (Number(data[i][j].patient_id) === Number(incidentBoxes[j])) {
+                            console.log(data[i][j]);
+                            new SetResultsSessionStorage(data[i][j]);
                         }
                     }
                     sessionStorage.clear();
                 }
+
+
+                // for (let i = 0; i < incidentBoxes.length; i++) {
+                //     for (let j = 0; j < data[0].length; j++) {
+                //         console.log(data[0][j]);
+                //         if (Number(data[0][j].patient_id) === Number(incidentBoxes[j])) {
+                //             new SetResultsSessionStorage(data[0][j]);
+                //         }
+                //     }
+                //     sessionStorage.clear();
+                // }
             } else {
                 alert(`Nothing Selected`);
             }
