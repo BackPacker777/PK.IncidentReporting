@@ -185,23 +185,21 @@ export default class SetResultsSessionStorage {
         sessionStorage.setItem('dest', data.dest);
 
         //WITNESSESS----------------------------------------------------------------------------------------------------
-        if (data.witness_id) {
+        if (data.name0) {
             let count = 0;
             const MAX_WITNESS = 8;
             while (count >= 0 && count < MAX_WITNESS) {
-                if (Number(data.witness_id) === count) {
-                    sessionStorage.setItem(`w${count}Name`, data.name);
-                    sessionStorage.setItem(`w${count}Street`, data.street);
-                    sessionStorage.setItem(`w${count}CityStateZip`, data.city_state_zip);
-                    sessionStorage.setItem(`w${count}HomePhoneNum`, data.home_phone);
-                    sessionStorage.setItem(`w${count}CellPhoneNum`, data.cell_phone);
-                    sessionStorage.setItem(`w${count}Statement`, data.statement);
-                    break;
+                if (data[`name${count}`]) { //https://stackoverflow.com/q/53675369/466246
+                    sessionStorage.setItem(`w${count}Name`, data[`name${count}`]);
+                    sessionStorage.setItem(`w${count}Street`, data[`street${count}`]);
+                    sessionStorage.setItem(`w${count}CityStateZip`, data[`city_state_zip${count}`]);
+                    sessionStorage.setItem(`w${count}HomePhoneNum`, data[`home_phone${count}`]);
+                    sessionStorage.setItem(`w${count}CellPhoneNum`, data[`cell_phone${count}`]);
+                    sessionStorage.setItem(`w${count}Statement`, data[`statement${count}`]);
                 }
                 count++;
             }
         }
-
 
         //REPORT COMPLETER----------------------------------------------------------------------------------------------
         sessionStorage.setItem('reportCompleter', data.reportCompleter);

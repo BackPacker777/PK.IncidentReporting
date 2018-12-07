@@ -4,6 +4,8 @@ import SetResultsSessionStorage from './SetResultsSessionStorage.js';
 
 export default class ProcessArchives {
     constructor() {
+        let canvas = document.querySelector('#sigCanvas');
+        this.signature = new SignaturePad(canvas);
         this.prepArchivesUX();
         this.handleReturnButton();
     }
@@ -112,7 +114,7 @@ export default class ProcessArchives {
             } else {
                 searchFor = ['incidentID', document.getElementById("searchIncidentIDInput").value];
             }
-            this.performFetch(searchFor);
+            this.performFetch(1, searchFor);
             searchFor = [];
             document.getElementById("searchButton").removeEventListener("click", removeMe);
             document.getElementById("searchButton").classList.add('disabled');
@@ -121,9 +123,8 @@ export default class ProcessArchives {
     }
 
     displaySearchResults(data) {
-        data = JSON.parse(data);
-        console.log(data);
-        if (data[0].length > 0) {
+        console.log(data[0]);
+        if (data.length > 0) {
             document.getElementById(`incidentData`).innerHTML += `<div class="row" id="IncidentHeaders">
                     <div class="small-1 columns"><strong>SELECT:</strong></div>
                     <div class="small-1 columns"><strong>Last:</strong></div>
@@ -132,25 +133,25 @@ export default class ProcessArchives {
                     <div class="small-7 columns"><strong>Incident Description:</strong></div>
                     <div class="small-1 columns"><strong>Location:</strong></div>
                 </div>`;
-            for (let j = 0; j < data[0].length; j++) {
+            for (let j = 0; j < data.length; j++) {
                 document.getElementById(`incidentData`).innerHTML += `<div class="row">
                     <div class="small-1 columns text-center">
-                        <input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[0][j].incident_id}" value="${data[0][j].incident_id}">
+                        <input type="checkbox" name="archiveIncidents" id="archiveIncident.${data[j].incident_id}" value="${data[j].incident_id}">
                     </div>
                     <div class="small-1 columns">
-                        ${data[0][j].lastName}
+                        ${data[j].lastName}
                     </div>
                     <div class="small-1 columns">
-                        ${data[0][j].firstName}
+                        ${data[j].firstName}
                     </div>
                     <div class="small-1 columns">
-                        ${data[0][j].date}
+                        ${data[j].date}
                     </div>
                     <div class="small-7 columns">
-                        ${data[0][j].incidentDescription}
+                        ${data[j].incidentDescription}
                     </div>
                     <div class="small-1 columns">
-                        ${data[0][j].location}
+                        ${data[j].location}
                     </div>
                 </div>`
             }
@@ -175,27 +176,20 @@ export default class ProcessArchives {
                 }
             });
             if (incidentBoxes.length > 0) {
-                // FIX THIS SECTION - LOOPING IS BROKEN
                 for (let i = 0; i < data.length; i++) {
                     for (let j = 0; j < incidentBoxes.length; j++) {
-                        if (Number(data[i][j].patient_id) === Number(incidentBoxes[j])) {
-                            console.log(data[i][j]);
-                            new SetResultsSessionStorage(data[i][j]);
+                        if (Number(data[j].patient_id) === Number(incidentBoxes[j])) {
+                            if (data[j].finalSig) {
+                                let sig = this.signature.fromDataURL(data[j].finalSig);
+                                console.log(sig);
+                                this.performFetch(10, sig);
+                            }
+                            console.log(data[j]);
+                            new SetResultsSessionStorage(data[j]);
                         }
                     }
                     sessionStorage.clear();
                 }
-
-
-                // for (let i = 0; i < incidentBoxes.length; i++) {
-                //     for (let j = 0; j < data[0].length; j++) {
-                //         console.log(data[0][j]);
-                //         if (Number(data[0][j].patient_id) === Number(incidentBoxes[j])) {
-                //             new SetResultsSessionStorage(data[0][j]);
-                //         }
-                //     }
-                //     sessionStorage.clear();
-                // }
             } else {
                 alert(`Nothing Selected`);
             }
@@ -208,18 +202,20 @@ export default class ProcessArchives {
         });
     }
 
-    performFetch(criteria) {
+    performFetch(whichFetch, criteria) {
         fetch(document.url, {
             method: 'POST',
             body: criteria,
             headers: {
-                'x-requested-with': 'fetch.1',
+                'x-requested-with': `fetch.${whichFetch}`,
                 'mode': 'no-cors'
             }
         }).then((response) => {
             return response.text();
         }).then((data) => {
-            this.displaySearchResults(data);
+            if (whichFetch === 1) {
+                this.displaySearchResults(JSON.parse(data));
+            }
         }).catch((error) => {
             console.log(error);
         });

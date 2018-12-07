@@ -20,6 +20,7 @@ class DataHandler {
     }
 
     static saveSignature(sig, callback) {
+        console.log(`sig = ${sig}`);
         FS.writeFile(`public/images/signature.png`, sig, 'base64', err => {
             if (err) throw err;
             callback('saved');
@@ -261,8 +262,7 @@ class DataHandler {
                     console.log(`DATE ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    // console.log(data);
-                    callback(data);
+                    this.queryWitnesses(data[0][0].patient_id, data, callback);
                 }
             });
         } else if (search[0] === 'lastName') {
@@ -277,8 +277,7 @@ class DataHandler {
                     console.log(`NAME ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    callback(data);
-                    // console.log(data);
+                    this.queryWitnesses(data[0][0].patient_id, data, callback);
 
                 }
             });
@@ -294,8 +293,6 @@ class DataHandler {
                     console.log(`ID ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    // console.log(data);
-                    // callback(data);
                     this.queryWitnesses(data[0][0].patient_id, data, callback);
                 }
             });
@@ -304,21 +301,26 @@ class DataHandler {
 
     queryWitnesses(patient, data, callback) {
         let witness_sql = `SELECT * FROM pk_witnesses WHERE pk_witnesses.patient_id = ?`;
-
         this.db.all(witness_sql, [patient], (err, rows) => {
             if (err) {
                 console.log(`ID ERR = ${err}`);
             } else {
-                for (let i = 0; i < rows.length; i++) {
-                    let witness = {
-                        `name${[i]}`:
-                    };
+                for (let j = 0; j < data[0].length; j++) {
+                    let newData = data[0][j];
+                    for (let i = 0; i < rows.length; i++) {
+                        let name = `name${i}`, street = `street${i}`, city_state_zip = `city_state_zip${i}`, home_phone = `home_phone${i}`, cell_phone = `cell_phone${i}`, statement = `statement${i}`;
+                        Object.assign(newData, {
+                            [name]: rows[i].name,
+                            [street]: rows[i].street,
+                            [city_state_zip]: rows[i].city_state_zip,
+                            [home_phone]: rows[i].home_phone,
+                            [cell_phone]: rows[i].cell_phone,
+                            [statement]: rows[i].statement
+                        });
+                        data[0][j] = newData;
+                    }
                 }
-
-                // data[0]
-                // data.push(rows);
-                // console.log(data);
-                callback(data);
+                callback(data[0]);
             }
         });
     }
