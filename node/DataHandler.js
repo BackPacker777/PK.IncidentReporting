@@ -254,14 +254,17 @@ class DataHandler {
                       LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id 
                       LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                       LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
-                      LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                       WHERE pk_incidents.date = ?`;
             this.db.all(sql, [date], (err, rows) => {
                 if (err) {
                     console.log(`DATE ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    this.queryWitnesses(data[0][0].patient_id, data, callback);
+                    if (rows.length > 0) {
+                        this.queryWitnesses(data[0][0].patient_id, data, callback);
+                    } else {
+                        callback(data[0]);
+                    }
                 }
             });
         } else if (search[0] === 'lastName') {
@@ -269,18 +272,20 @@ class DataHandler {
                       LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id
                       LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
                       LEFT JOIN pk_firstAid ON pk_patients.patient_id = pk_firstAid.patient_id
-                      LEFT JOIN pk_witnesses ON pk_patients.patient_id = pk_witnesses.patient_id
                       WHERE LOWER(pk_patients.lastName) = ?`;
             this.db.all(sql, [search[1]], (err, rows) => {
                 if (err) {
                     console.log(`NAME ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    this.queryWitnesses(data[0][0].patient_id, data, callback);
-
+                    if (rows.length > 0) {
+                        this.queryWitnesses(data[0][0].patient_id, data, callback);
+                    } else {
+                        callback(data[0]);
+                    }
                 }
             });
-        } else if (search[0] === 'incidentID') {
+        } else {
             let sql = `SELECT * FROM pk_incidents LEFT JOIN pk_patients ON pk_incidents.patient_id = pk_patients.patient_id
                           LEFT JOIN pk_siteData ON pk_patients.patient_id = pk_siteData.patient_id
                           LEFT JOIN pk_patientEquip ON pk_patients.patient_id = pk_patientEquip.patient_id
@@ -292,7 +297,11 @@ class DataHandler {
                     console.log(`ID ERR = ${err}`);
                 } else {
                     data.push(rows);
-                    this.queryWitnesses(data[0][0].patient_id, data, callback);
+                    if (rows.length > 0) {
+                        this.queryWitnesses(data[0][0].patient_id, data, callback);
+                    } else {
+                        callback(data[0]);
+                    }
                 }
             });
         }

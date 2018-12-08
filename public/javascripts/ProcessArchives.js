@@ -113,7 +113,6 @@ export default class ProcessArchives {
                 searchFor = ['incidentID', document.getElementById("searchIncidentIDInput").value];
             }
             this.performFetch(1, searchFor);
-            searchFor = [];
             document.getElementById("searchButton").removeEventListener("click", removeMe);
             document.getElementById("searchButton").classList.add('disabled');
             document.getElementById("searchButton").disabled = true;
@@ -121,7 +120,6 @@ export default class ProcessArchives {
     }
 
     displaySearchResults(data) {
-        console.log(data[0]);
         if (data.length > 0) {
             document.getElementById(`incidentData`).innerHTML += `<div class="row" id="IncidentHeaders">
                     <div class="small-1 columns"><strong>SELECT:</strong></div>
@@ -174,19 +172,22 @@ export default class ProcessArchives {
                 }
             });
             if (incidentBoxes.length > 0) {
-                for (let i = 0; i < data.length; i++) {
-                    for (let j = 0; j < incidentBoxes.length; j++) {
-                        if (Number(data[j].patient_id) === Number(incidentBoxes[j])) {
-                            if (data[j].finalSig) {
-                                let sig = data[j].finalSig;
+                for (let j = 0; j < incidentBoxes.length; j++) {
+                    console.log(`data.length = ${data.length}`);
+                    for (let i = 0; i < data.length; i++) {
+                        console.log(`incidentBoxes.length = ${incidentBoxes.length}`);
+                        console.log(`patient_id: ${Number(data[i].patient_id)}, incidentBox: ${Number(incidentBoxes[j])}`);
+                        if (Number(data[i].patient_id) === Number(incidentBoxes[j])) {
+                            if (data[i].finalSig) {
+                                let sig = data[i].finalSig;
                                 this.performFetch(10, sig);
                             }
-                            console.log(data[j]);
-                            new SetResultsSessionStorage(data[j]);
+                            new SetResultsSessionStorage(data[i]);
                         }
                     }
                     sessionStorage.clear();
                 }
+                incidentBoxes = [];
             } else {
                 alert(`Nothing Selected`);
             }
