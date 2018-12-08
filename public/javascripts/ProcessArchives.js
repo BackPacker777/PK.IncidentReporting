@@ -173,10 +173,7 @@ export default class ProcessArchives {
             });
             if (incidentBoxes.length > 0) {
                 for (let j = 0; j < incidentBoxes.length; j++) {
-                    console.log(`data.length = ${data.length}`);
                     for (let i = 0; i < data.length; i++) {
-                        console.log(`incidentBoxes.length = ${incidentBoxes.length}`);
-                        console.log(`patient_id: ${Number(data[i].patient_id)}, incidentBox: ${Number(incidentBoxes[j])}`);
                         if (Number(data[i].patient_id) === Number(incidentBoxes[j])) {
                             if (data[i].finalSig) {
                                 let sig = data[i].finalSig;
