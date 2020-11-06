@@ -10,7 +10,7 @@ class DataHandler {
     }
 
     static checkPassword(password, callback) {
-        const PASSWORD = `pksp2019`;
+        const PASSWORD = `PKSPPRACTICESITE`;
         password =  password.replace(/['"]+/g, '');
         if (password === PASSWORD) {
             callback(`1`);
